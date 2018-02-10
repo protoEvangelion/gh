@@ -1,5 +1,5 @@
 var pageComponent =
-webpackJsonppageComponent([1,11,12],[
+webpackJsonppageComponent([8,11,12],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -10634,19 +10634,12 @@ exports.default = parseFromAnchor;
 /* 89 */,
 /* 90 */,
 /* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lDQfJ", function() { return lDQfJ; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "liBVh", function() { return liBVh; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "templates", function() { return templates; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_metal_component__);
@@ -10662,11 +10655,11 @@ goog.loadModule(function(exports) {
 // Please don't edit this file by hand.
 
 /**
- * @fileoverview Templates in namespace lDQfJ.
+ * @fileoverview Templates in namespace liBVh.
  * @public
  */
 
-goog.module('lDQfJ.incrementaldom');
+goog.module('liBVh.incrementaldom');
 
 /** @suppress {extraRequire} */
 var soy = goog.require('soy');
@@ -10700,20 +10693,124 @@ var $templateAlias1 = __WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.getTempl
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  var param846 = function() {
+  var param294 = function() {
     ie_open('h6');
-      var dyn16 = opt_data.page.description;
-      if (typeof dyn16 == 'function') dyn16(); else if (dyn16 != null) itext(dyn16);
+      var dyn11 = opt_data.page.description;
+      if (typeof dyn11 == 'function') dyn11(); else if (dyn11 != null) itext(dyn11);
     ie_close('h6');
     ie_open('article', null, null,
         'id', '1');
-      $templateAlias2({code: 'gh user', mode: 'javascript'}, null, opt_ijData);
+      $templateAlias2({code: 'gh gists', mode: 'javascript'}, null, opt_ijData);
       ie_open('h4');
         itext('Alias:');
       ie_close('h4');
-      $templateAlias2({code: 'gh us', mode: 'javascript'}, null, opt_ijData);
+      $templateAlias2({code: 'gh gi', mode: 'javascript'}, null, opt_ijData);
       ie_open('h2');
-        itext('Login/Logout');
+        itext('Open in Browser');
+      ie_close('h2');
+      ie_open('table');
+        ie_open('thead');
+          ie_open('tr');
+            ie_open('th');
+              itext('Option');
+            ie_close('th');
+            ie_open('th');
+              itext('Usage');
+            ie_close('th');
+            ie_open('th');
+              itext('Type');
+            ie_close('th');
+          ie_close('tr');
+        ie_close('thead');
+        ie_open('tbody');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-B');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--browser');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('strong');
+                itext('Required');
+              ie_close('strong');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('Boolean');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-u');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--user');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-i');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--id');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+        ie_close('tbody');
+      ie_close('table');
+      ie_open('h4');
+        itext('Examples');
+      ie_close('h4');
+      ie_open('ul');
+        ie_open('li');
+          ie_open('strong');
+            itext('Shortcut');
+          ie_close('strong');
+          itext(' for opening your Gists in the browser.');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh gi', mode: 'shell'}, null, opt_ijData);
+      ie_open('ul');
+        ie_open('li');
+          itext('Open a Gist in the browser.');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh gi --browser --id 5991877', mode: 'shell'}, null, opt_ijData);
+    ie_close('article');
+    ie_open('article', null, null,
+        'id', '2');
+      ie_open('h2');
+        itext('List');
       ie_close('h2');
       ie_open('table');
         ie_open('thead');
@@ -10737,7 +10834,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('code');
               itext(', ');
               ie_open('code');
-                itext('--login');
+                itext('--list');
               ie_close('code');
             ie_close('td');
             ie_open('td');
@@ -10754,21 +10851,21 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('-L');
+                itext('-u');
               ie_close('code');
               itext(', ');
               ie_open('code');
-                itext('--logout');
+                itext('--user');
               ie_close('code');
             ie_close('td');
             ie_open('td');
-              ie_open('strong');
-                itext('Required');
-              ie_close('strong');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
             ie_close('td');
             ie_open('td');
               ie_open('code');
-                itext('Boolean');
+                itext('String');
               ie_close('code');
             ie_close('td');
           ie_close('tr');
@@ -10779,21 +10876,21 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_close('h4');
       ie_open('ul');
         ie_open('li');
-          itext('Login or show current logged in GitHub user.');
+          itext('List all gists.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh user --login', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh gi --list', mode: 'shell'}, null, opt_ijData);
       ie_open('ul');
         ie_open('li');
-          itext('Logout current GitHub account.');
+          itext('List all gists from someone.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh user --logout', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh gi --list --user brunocoelho', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('article', null, null,
-        'id', '2');
+        'id', '3');
       ie_open('h2');
-        itext('Whoami');
+        itext('Create');
       ie_close('h2');
       ie_open('table');
         ie_open('thead');
@@ -10813,17 +10910,80 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('-w');
+                itext('-N');
               ie_close('code');
               itext(', ');
               ie_open('code');
-                itext('--whoami');
+                itext('--new');
               ie_close('code');
             ie_close('td');
             ie_open('td');
               ie_open('strong');
                 itext('Required');
               ie_close('strong');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-c');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--content');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-d');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--description');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-p');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--private');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
             ie_close('td');
             ie_open('td');
               ie_open('code');
@@ -10838,10 +10998,136 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_close('h4');
       ie_open('ul');
         ie_open('li');
-          itext('Prints your username to stdout.');
+          itext('Create a Gist ');
+          ie_open('code');
+            itext('hello');
+          ie_close('code');
+          itext(' containing "Hello World".');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh user --whoami', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh gi --new hello --content "Hello World!"', mode: 'shell'}, null, opt_ijData);
+      ie_open('ul');
+        ie_open('li');
+          itext('Create a private Gist ');
+          ie_open('code');
+            itext('hello');
+          ie_close('code');
+          itext(' containing "Hello World".');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh gi --new hello --content "Hello World!" --private', mode: 'shell'}, null, opt_ijData);
+    ie_close('article');
+    ie_open('article', null, null,
+        'id', '4');
+      ie_open('h2');
+        itext('Fork');
+      ie_close('h2');
+      ie_open('table');
+        ie_open('thead');
+          ie_open('tr');
+            ie_open('th');
+              itext('Option');
+            ie_close('th');
+            ie_open('th');
+              itext('Usage');
+            ie_close('th');
+            ie_open('th');
+              itext('Type');
+            ie_close('th');
+          ie_close('tr');
+        ie_close('thead');
+        ie_open('tbody');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-f');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--fork');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('strong');
+                itext('Required');
+              ie_close('strong');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+        ie_close('tbody');
+      ie_close('table');
+      ie_open('h4');
+        itext('Examples');
+      ie_close('h4');
+      ie_open('ul');
+        ie_open('li');
+          itext('Fork a Gist.');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh gi --fork 5444883', mode: 'shell'}, null, opt_ijData);
+    ie_close('article');
+    ie_open('article', null, null,
+        'id', '5');
+      ie_open('h2');
+        itext('Delete');
+      ie_close('h2');
+      ie_open('table');
+        ie_open('thead');
+          ie_open('tr');
+            ie_open('th');
+              itext('Option');
+            ie_close('th');
+            ie_open('th');
+              itext('Usage');
+            ie_close('th');
+            ie_open('th');
+              itext('Type');
+            ie_close('th');
+          ie_close('tr');
+        ie_close('thead');
+        ie_open('tbody');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-D');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--delete');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('strong');
+                itext('Required');
+              ie_close('strong');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+        ie_close('tbody');
+      ie_close('table');
+      ie_open('h4');
+        itext('Example');
+      ie_close('h4');
+      ie_open('ul');
+        ie_open('li');
+          itext('Delete a Gist.');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh gi --delete 4252323', mode: 'shell'}, null, opt_ijData);
+      ie_open('ul');
+        ie_open('li');
+          itext('Delete multiple Gists.');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh gi --delete 4252321 --delete 4252322', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('input', null, null,
         'type', 'hidden',
@@ -10852,11 +11138,11 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         'value', opt_data.site.title);
     ie_close('input');
   };
-  $templateAlias1(soy.$$assignDefaults({content: param846}, opt_data), null, opt_ijData);
+  $templateAlias1(soy.$$assignDefaults({content: param294}, opt_data), null, opt_ijData);
 }
 exports.render = $render;
 if (goog.DEBUG) {
-  $render.soyTemplateName = 'lDQfJ.render';
+  $render.soyTemplateName = 'liBVh.render';
 }
 
 exports.render.params = ["page","site"];
@@ -10866,25 +11152,25 @@ return exports;
 
 });
 
-class lDQfJ extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
-__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(lDQfJ, templates);
+class liBVh extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
+__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(liBVh, templates);
 
 /* harmony default export */ __webpack_exports__["default"] = (templates);
 /* jshint ignore:end */
 
 
 /***/ }),
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
 /* 100 */,
 /* 101 */,
 /* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10914,7 +11200,7 @@ __webpack_require__(11);
 
 __webpack_require__(19);
 
-var _indexSoy = __webpack_require__(99);
+var _indexSoy = __webpack_require__(92);
 
 var _indexSoy2 = _interopRequireDefault(_indexSoy);
 
@@ -10926,23 +11212,23 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var lDQfJ = function (_Component) {
-  _inherits(lDQfJ, _Component);
+var liBVh = function (_Component) {
+  _inherits(liBVh, _Component);
 
-  function lDQfJ() {
-    _classCallCheck(this, lDQfJ);
+  function liBVh() {
+    _classCallCheck(this, liBVh);
 
-    return _possibleConstructorReturn(this, (lDQfJ.__proto__ || Object.getPrototypeOf(lDQfJ)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (liBVh.__proto__ || Object.getPrototypeOf(liBVh)).apply(this, arguments));
   }
 
-  return lDQfJ;
+  return liBVh;
 }(_metalComponent2.default);
 
 ;
 
-_metalSoy2.default.register(lDQfJ, _indexSoy2.default);
+_metalSoy2.default.register(liBVh, _indexSoy2.default);
 
-exports.default = lDQfJ;
+exports.default = liBVh;
 
 /***/ })
-],[110]);
+],[103]);

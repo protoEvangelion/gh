@@ -1,5 +1,5 @@
 var pageComponent =
-webpackJsonppageComponent([9,11,12],[
+webpackJsonppageComponent([6,11,12],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -10633,12 +10633,16 @@ exports.default = parseFromAnchor;
 /* 88 */,
 /* 89 */,
 /* 90 */,
-/* 91 */
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ldGmH", function() { return ldGmH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ZlCPz", function() { return ZlCPz; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "templates", function() { return templates; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_metal_component__);
@@ -10654,11 +10658,11 @@ goog.loadModule(function(exports) {
 // Please don't edit this file by hand.
 
 /**
- * @fileoverview Templates in namespace ldGmH.
+ * @fileoverview Templates in namespace ZlCPz.
  * @public
  */
 
-goog.module('ldGmH.incrementaldom');
+goog.module('ZlCPz.incrementaldom');
 
 /** @suppress {extraRequire} */
 var soy = goog.require('soy');
@@ -10692,40 +10696,20 @@ var $templateAlias1 = __WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.getTempl
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  var param177 = function() {
+  var param360 = function() {
     ie_open('h6');
-      var dyn9 = opt_data.page.description;
-      if (typeof dyn9 == 'function') dyn9(); else if (dyn9 != null) itext(dyn9);
+      var dyn12 = opt_data.page.description;
+      if (typeof dyn12 == 'function') dyn12(); else if (dyn12 != null) itext(dyn12);
     ie_close('h6');
     ie_open('article', null, null,
         'id', '1');
-      ie_open('h2');
-        itext('Install');
-      ie_close('h2');
-      $templateAlias2({code: '[sudo] npm install -g gh', mode: 'javascript'}, null, opt_ijData);
-    ie_close('article');
-    ie_open('article', null, null,
-        'id', '2');
-      ie_open('h2');
-        itext('Usage');
-      ie_close('h2');
-      $templateAlias2({code: 'gh [command] [payload] [--flags]', mode: 'javascript'}, null, opt_ijData);
+      $templateAlias2({code: 'gh notification', mode: 'javascript'}, null, opt_ijData);
       ie_open('h4');
-        itext('Dependencies');
+        itext('Alias:');
       ie_close('h4');
-      ie_open('p');
-        itext('In order to sucessfully run this project you must have ');
-        ie_open('a', null, null,
-            'href', 'http://nodejs.org/dist/v0.12.0/');
-          itext('NodeJS >= v0.12.0');
-        ie_close('a');
-        itext(' installed.');
-      ie_close('p');
-    ie_close('article');
-    ie_open('article', null, null,
-        'id', '3');
+      $templateAlias2({code: 'gh nt', mode: 'javascript'}, null, opt_ijData);
       ie_open('h2');
-        itext('Global flags');
+        itext('Latest');
       ie_close('h2');
       ie_open('table');
         ie_open('thead');
@@ -10745,13 +10729,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('--verbose');
+                itext('-l');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--latest');
               ie_close('code');
             ie_close('td');
             ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
+              ie_open('strong');
+                itext('Required');
+              ie_close('strong');
             ie_close('td');
             ie_open('td');
               ie_open('code');
@@ -10762,7 +10750,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('--insane');
+                itext('--remote');
               ie_close('code');
             ie_close('td');
             ie_open('td');
@@ -10772,14 +10760,18 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             ie_close('td');
             ie_open('td');
               ie_open('code');
-                itext('Boolean');
+                itext('String');
               ie_close('code');
             ie_close('td');
           ie_close('tr');
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('--no-hooks');
+                itext('-r');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--repo');
               ie_close('code');
             ie_close('td');
             ie_open('td');
@@ -10789,147 +10781,169 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             ie_close('td');
             ie_open('td');
               ie_open('code');
-                itext('Boolean');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-u');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--user');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
               ie_close('code');
             ie_close('td');
           ie_close('tr');
         ie_close('tbody');
       ie_close('table');
-      ie_open('p');
-        itext('The verbose flag is useful for debugging issues. The insane flag is a more complete verbose flag, which leaks more privacy sensitive data by default.');
-      ie_close('p');
+      ie_open('h4');
+        itext('Examples');
+      ie_close('h4');
+      ie_open('ul');
+        ie_open('li');
+          ie_open('strong');
+            itext('Shortcut');
+          ie_close('strong');
+          itext(' for displaying the latest activities on the current repository.');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh nt', mode: 'shell'}, null, opt_ijData);
+      ie_open('ul');
+        ie_open('li');
+          itext('Display the latest activities on a certain repository.');
+        ie_close('li');
+      ie_close('ul');
+      $templateAlias2({code: 'gh nt --latest --user eduardolundgren --repo node-gh', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('article', null, null,
-        'id', '4');
+        'id', '2');
       ie_open('h2');
-        itext('Getting Help');
+        itext('Watch');
       ie_close('h2');
-      $templateAlias2({code: 'gh help', mode: 'shell'}, null, opt_ijData);
+      ie_open('table');
+        ie_open('thead');
+          ie_open('tr');
+            ie_open('th');
+              itext('Option');
+            ie_close('th');
+            ie_open('th');
+              itext('Usage');
+            ie_close('th');
+            ie_open('th');
+              itext('Type');
+            ie_close('th');
+          ie_close('tr');
+        ie_close('thead');
+        ie_open('tbody');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-w');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--watch');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('strong');
+                itext('Required');
+              ie_close('strong');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('Boolean');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('--remote');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-r');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--repo');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-u');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--user');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+        ie_close('tbody');
+      ie_close('table');
+      ie_open('h4');
+        itext('Examples');
+      ie_close('h4');
       ie_open('ul');
         ie_open('li');
-          itext('List all comands options.');
+          itext('Watch for any activity on the current repository.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh help --all', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh nt --watch', mode: 'shell'}, null, opt_ijData);
       ie_open('ul');
         ie_open('li');
-          itext('List specific command options.');
+          itext('Watch for any activity on a certain repository.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh help <command>', mode: 'shell'}, null, opt_ijData);
-    ie_close('article');
-    ie_open('article', null, null,
-        'id', '5');
-      ie_open('h2');
-        itext('Config');
-      ie_close('h2');
-      ie_open('p');
-        itext('There are some pretty useful configurations that you can set on ');
-        ie_open('a', null, null,
-            'href', 'https://github.com/node-gh/gh/blob/master/default.gh.json');
-          itext('.gh.json');
-        ie_close('a');
-        itext('. This file can be found under home directory ');
-        ie_open('em');
-          itext('(on MacOSx: ');
-          ie_open('code');
-            itext('/Users/yourName/.gh.json');
-          ie_close('code');
-          itext(' on Windows: ');
-          ie_open('code');
-            itext('C:\\\\Users\\yourName\\.gh.json');
-          ie_close('code');
-          itext(')');
-        ie_close('em');
-        itext('.');
-      ie_close('p');
-      ie_open('p');
-        itext('You can also set per-project configurations by adding a ');
-        ie_open('code');
-          itext('.gh.json');
-        ie_close('code');
-        itext(' file in your project\'s root folder and overriding existing keys.');
-      ie_close('p');
-      ie_open('ul');
-        ie_open('li');
-          itext('GitHub API configurations. Change it if you\'re a ');
-          ie_open('a', null, null,
-              'href', 'https://enterprise.github.com/');
-            itext('GitHub Enterprise');
-          ie_close('a');
-          itext(' user.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"api": {\n    "host": "api.github.com",\n    "protocol": "https",\n    "version": "3.0.0",\n    "pathPrefix": null\n}', mode: 'javascript'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Set default branch and remote.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"default_branch": "master",\n"default_remote": "origin"', mode: 'javascript'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Set default users when ');
-          ie_open('a', null, null,
-              'href', '#7-submit');
-            itext('submitting');
-          ie_close('a');
-          itext(' or ');
-          ie_open('a', null, null,
-              'href', '#5-forward');
-            itext('forwarding');
-          ie_close('a');
-          itext(' pull requests.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"default_pr_forwarder": "",\n"default_pr_reviewer": ""', mode: 'javascript'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('GitHub data filled once you log in.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"github_token": "",\n"github_user": ""', mode: 'javascript'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Run automated tasks before or after a certain command.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"hooks": {\n        "pull-request": {\n            "merge": {\n                "before": [{"cmd": "ls -la", "log": true}],\n                "after": [\n                    "gh pr {{options.number}} --comment \'Thank you, pull request merged :D\'"\n                ]\n            }\n        }\n}', mode: 'javascript'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Run automated tasks passing arguments to the commands. Required for prompt commands.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"hooks": {\n        "pull-request": {\n            "merge": {\n                "before": [{"cmd": "foo", "args": ["bar", "qux"]}]\n            }\n        }\n}', mode: 'javascript'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Set default branch name prefix for PR fetching.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"pull_branch_name_prefix": "pr-"', mode: 'javascript'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Insert signature below issue comment.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: '"signature": "<br><br>:octocat: *Sent from [GH](http://nodegh.io).*"', mode: 'javascript'}, null, opt_ijData);
-      ie_open('p');
-        itext('If you need to use a custom git command, set the environment variable ');
-        ie_open('code');
-          itext('GH_GIT_COMMAND');
-        ie_close('code');
-        itext('.');
-      ie_close('p');
-    ie_close('article');
-    ie_open('article', null, null,
-        'id', 'demo');
-      ie_open('h2');
-        itext('Demonstration');
-      ie_close('h2');
-      ie_void('script', null, null,
-          'src', 'https://asciinema.org/a/3391.js',
-          'id', 'asciicast-3391',
-          'async', '');
+      $templateAlias2({code: 'gh nt --watch --user eduardolundgren --repo node-gh', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('input', null, null,
         'type', 'hidden',
@@ -10940,11 +10954,11 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         'value', opt_data.site.title);
     ie_close('input');
   };
-  $templateAlias1(soy.$$assignDefaults({content: param177}, opt_data), null, opt_ijData);
+  $templateAlias1(soy.$$assignDefaults({content: param360}, opt_data), null, opt_ijData);
 }
 exports.render = $render;
 if (goog.DEBUG) {
-  $render.soyTemplateName = 'ldGmH.render';
+  $render.soyTemplateName = 'ZlCPz.render';
 }
 
 exports.render.params = ["page","site"];
@@ -10954,25 +10968,24 @@ return exports;
 
 });
 
-class ldGmH extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
-__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(ldGmH, templates);
+class ZlCPz extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
+__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(ZlCPz, templates);
 
 /* harmony default export */ __webpack_exports__["default"] = (templates);
 /* jshint ignore:end */
 
 
 /***/ }),
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
 /* 96 */,
 /* 97 */,
 /* 98 */,
 /* 99 */,
 /* 100 */,
 /* 101 */,
-/* 102 */
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11002,7 +11015,7 @@ __webpack_require__(11);
 
 __webpack_require__(19);
 
-var _indexSoy = __webpack_require__(91);
+var _indexSoy = __webpack_require__(95);
 
 var _indexSoy2 = _interopRequireDefault(_indexSoy);
 
@@ -11014,23 +11027,23 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ldGmH = function (_Component) {
-  _inherits(ldGmH, _Component);
+var ZlCPz = function (_Component) {
+  _inherits(ZlCPz, _Component);
 
-  function ldGmH() {
-    _classCallCheck(this, ldGmH);
+  function ZlCPz() {
+    _classCallCheck(this, ZlCPz);
 
-    return _possibleConstructorReturn(this, (ldGmH.__proto__ || Object.getPrototypeOf(ldGmH)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ZlCPz.__proto__ || Object.getPrototypeOf(ZlCPz)).apply(this, arguments));
   }
 
-  return ldGmH;
+  return ZlCPz;
 }(_metalComponent2.default);
 
 ;
 
-_metalSoy2.default.register(ldGmH, _indexSoy2.default);
+_metalSoy2.default.register(ZlCPz, _indexSoy2.default);
 
-exports.default = ldGmH;
+exports.default = ZlCPz;
 
 /***/ })
-],[102]);
+],[105]);

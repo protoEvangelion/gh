@@ -1,5 +1,5 @@
 var pageComponent =
-webpackJsonppageComponent([6,11,12],[
+webpackJsonppageComponent([10,11,12],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -10632,17 +10632,12 @@ exports.default = parseFromAnchor;
 /* 87 */,
 /* 88 */,
 /* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nnjvP", function() { return nnjvP; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mgFZG", function() { return mgFZG; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "templates", function() { return templates; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_metal_component__);
@@ -10658,11 +10653,11 @@ goog.loadModule(function(exports) {
 // Please don't edit this file by hand.
 
 /**
- * @fileoverview Templates in namespace nnjvP.
+ * @fileoverview Templates in namespace mgFZG.
  * @public
  */
 
-goog.module('nnjvP.incrementaldom');
+goog.module('mgFZG.incrementaldom');
 
 /** @suppress {extraRequire} */
 var soy = goog.require('soy');
@@ -10696,20 +10691,20 @@ var $templateAlias1 = __WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.getTempl
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  var param360 = function() {
+  var param177 = function() {
     ie_open('h6');
-      var dyn12 = opt_data.page.description;
-      if (typeof dyn12 == 'function') dyn12(); else if (dyn12 != null) itext(dyn12);
+      var dyn9 = opt_data.page.description;
+      if (typeof dyn9 == 'function') dyn9(); else if (dyn9 != null) itext(dyn9);
     ie_close('h6');
     ie_open('article', null, null,
         'id', '1');
-      $templateAlias2({code: 'gh notification', mode: 'javascript'}, null, opt_ijData);
+      $templateAlias2({code: 'gh alias', mode: 'javascript'}, null, opt_ijData);
       ie_open('h4');
         itext('Alias:');
       ie_close('h4');
-      $templateAlias2({code: 'gh nt', mode: 'javascript'}, null, opt_ijData);
+      $templateAlias2({code: 'gh al', mode: 'javascript'}, null, opt_ijData);
       ie_open('h2');
-        itext('Latest');
+        itext('List');
       ie_close('h2');
       ie_open('table');
         ie_open('thead');
@@ -10733,7 +10728,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('code');
               itext(', ');
               ie_open('code');
-                itext('--latest');
+                itext('--list');
               ie_close('code');
             ie_close('td');
             ie_open('td');
@@ -10747,65 +10742,6 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('code');
             ie_close('td');
           ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('--remote');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-r');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--repo');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-u');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--user');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
         ie_close('tbody');
       ie_close('table');
       ie_open('h4');
@@ -10816,21 +10752,21 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('strong');
             itext('Shortcut');
           ie_close('strong');
-          itext(' for displaying the latest activities on the current repository.');
+          itext(' for listing aliases.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh nt', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh alias', mode: 'shell'}, null, opt_ijData);
       ie_open('ul');
         ie_open('li');
-          itext('Display the latest activities on a certain repository.');
+          itext('List aliases.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh nt --latest --user eduardolundgren --repo node-gh', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh alias --list', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('article', null, null,
         'id', '2');
       ie_open('h2');
-        itext('Watch');
+        itext('Add');
       ie_close('h2');
       ie_open('table');
         ie_open('thead');
@@ -10850,55 +10786,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('-w');
+                itext('-a');
               ie_close('code');
               itext(', ');
               ie_open('code');
-                itext('--watch');
+                itext('--add');
               ie_close('code');
             ie_close('td');
             ie_open('td');
               ie_open('strong');
                 itext('Required');
               ie_close('strong');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('Boolean');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('--remote');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-r');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--repo');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
             ie_close('td');
             ie_open('td');
               ie_open('code');
@@ -10917,9 +10815,9 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('code');
             ie_close('td');
             ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
+              ie_open('strong');
+                itext('Required');
+              ie_close('strong');
             ie_close('td');
             ie_open('td');
               ie_open('code');
@@ -10934,16 +10832,63 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_close('h4');
       ie_open('ul');
         ie_open('li');
-          itext('Watch for any activity on the current repository.');
+          itext('Create alias for username.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh nt --watch', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh alias --add zeno --user zenorocha', mode: 'shell'}, null, opt_ijData);
+    ie_close('article');
+    ie_open('article', null, null,
+        'id', '3');
+      ie_open('h2');
+        itext('Remove');
+      ie_close('h2');
+      ie_open('table');
+        ie_open('thead');
+          ie_open('tr');
+            ie_open('th');
+              itext('Option');
+            ie_close('th');
+            ie_open('th');
+              itext('Usage');
+            ie_close('th');
+            ie_open('th');
+              itext('Type');
+            ie_close('th');
+          ie_close('tr');
+        ie_close('thead');
+        ie_open('tbody');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-r');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--remove');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('strong');
+                itext('Required');
+              ie_close('strong');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+        ie_close('tbody');
+      ie_close('table');
+      ie_open('h4');
+        itext('Examples');
+      ie_close('h4');
       ie_open('ul');
         ie_open('li');
-          itext('Watch for any activity on a certain repository.');
+          itext('Remove alias.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh nt --watch --user eduardolundgren --repo node-gh', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh alias --remove zeno', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('input', null, null,
         'type', 'hidden',
@@ -10954,11 +10899,11 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         'value', opt_data.site.title);
     ie_close('input');
   };
-  $templateAlias1(soy.$$assignDefaults({content: param360}, opt_data), null, opt_ijData);
+  $templateAlias1(soy.$$assignDefaults({content: param177}, opt_data), null, opt_ijData);
 }
 exports.render = $render;
 if (goog.DEBUG) {
-  $render.soyTemplateName = 'nnjvP.render';
+  $render.soyTemplateName = 'mgFZG.render';
 }
 
 exports.render.params = ["page","site"];
@@ -10968,24 +10913,25 @@ return exports;
 
 });
 
-class nnjvP extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
-__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(nnjvP, templates);
+class mgFZG extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
+__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(mgFZG, templates);
 
 /* harmony default export */ __webpack_exports__["default"] = (templates);
 /* jshint ignore:end */
 
 
 /***/ }),
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
 /* 96 */,
 /* 97 */,
 /* 98 */,
 /* 99 */,
 /* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11015,7 +10961,7 @@ __webpack_require__(11);
 
 __webpack_require__(19);
 
-var _indexSoy = __webpack_require__(95);
+var _indexSoy = __webpack_require__(90);
 
 var _indexSoy2 = _interopRequireDefault(_indexSoy);
 
@@ -11027,23 +10973,23 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var nnjvP = function (_Component) {
-  _inherits(nnjvP, _Component);
+var mgFZG = function (_Component) {
+  _inherits(mgFZG, _Component);
 
-  function nnjvP() {
-    _classCallCheck(this, nnjvP);
+  function mgFZG() {
+    _classCallCheck(this, mgFZG);
 
-    return _possibleConstructorReturn(this, (nnjvP.__proto__ || Object.getPrototypeOf(nnjvP)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (mgFZG.__proto__ || Object.getPrototypeOf(mgFZG)).apply(this, arguments));
   }
 
-  return nnjvP;
+  return mgFZG;
 }(_metalComponent2.default);
 
 ;
 
-_metalSoy2.default.register(nnjvP, _indexSoy2.default);
+_metalSoy2.default.register(mgFZG, _indexSoy2.default);
 
-exports.default = nnjvP;
+exports.default = mgFZG;
 
 /***/ })
-],[105]);
+],[101]);
