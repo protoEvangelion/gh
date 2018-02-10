@@ -1,5 +1,5 @@
 var pageComponent =
-webpackJsonppageComponent([8,11,12],[
+webpackJsonppageComponent([6,11,12],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -10634,12 +10634,15 @@ exports.default = parseFromAnchor;
 /* 89 */,
 /* 90 */,
 /* 91 */,
-/* 92 */
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "liBVh", function() { return liBVh; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "qlktP", function() { return qlktP; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "templates", function() { return templates; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_metal_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_metal_component__);
@@ -10655,11 +10658,11 @@ goog.loadModule(function(exports) {
 // Please don't edit this file by hand.
 
 /**
- * @fileoverview Templates in namespace liBVh.
+ * @fileoverview Templates in namespace qlktP.
  * @public
  */
 
-goog.module('liBVh.incrementaldom');
+goog.module('qlktP.incrementaldom');
 
 /** @suppress {extraRequire} */
 var soy = goog.require('soy');
@@ -10693,124 +10696,20 @@ var $templateAlias1 = __WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.getTempl
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  var param294 = function() {
+  var param521 = function() {
     ie_open('h6');
-      var dyn11 = opt_data.page.description;
-      if (typeof dyn11 == 'function') dyn11(); else if (dyn11 != null) itext(dyn11);
+      var dyn13 = opt_data.page.description;
+      if (typeof dyn13 == 'function') dyn13(); else if (dyn13 != null) itext(dyn13);
     ie_close('h6');
     ie_open('article', null, null,
         'id', '1');
-      $templateAlias2({code: 'gh gists', mode: 'javascript'}, null, opt_ijData);
+      $templateAlias2({code: 'gh notification', mode: 'javascript'}, null, opt_ijData);
       ie_open('h4');
         itext('Alias:');
       ie_close('h4');
-      $templateAlias2({code: 'gh gi', mode: 'javascript'}, null, opt_ijData);
+      $templateAlias2({code: 'gh nt', mode: 'javascript'}, null, opt_ijData);
       ie_open('h2');
-        itext('Open in Browser');
-      ie_close('h2');
-      ie_open('table');
-        ie_open('thead');
-          ie_open('tr');
-            ie_open('th');
-              itext('Option');
-            ie_close('th');
-            ie_open('th');
-              itext('Usage');
-            ie_close('th');
-            ie_open('th');
-              itext('Type');
-            ie_close('th');
-          ie_close('tr');
-        ie_close('thead');
-        ie_open('tbody');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-B');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--browser');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('strong');
-                itext('Required');
-              ie_close('strong');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('Boolean');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-u');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--user');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-i');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--id');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-        ie_close('tbody');
-      ie_close('table');
-      ie_open('h4');
-        itext('Examples');
-      ie_close('h4');
-      ie_open('ul');
-        ie_open('li');
-          ie_open('strong');
-            itext('Shortcut');
-          ie_close('strong');
-          itext(' for opening your Gists in the browser.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: 'gh gi', mode: 'shell'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Open a Gist in the browser.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: 'gh gi --browser --id 5991877', mode: 'shell'}, null, opt_ijData);
-    ie_close('article');
-    ie_open('article', null, null,
-        'id', '2');
-      ie_open('h2');
-        itext('List');
+        itext('Latest');
       ie_close('h2');
       ie_open('table');
         ie_open('thead');
@@ -10834,7 +10733,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('code');
               itext(', ');
               ie_open('code');
-                itext('--list');
+                itext('--latest');
               ie_close('code');
             ie_close('td');
             ie_open('td');
@@ -10845,6 +10744,44 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             ie_open('td');
               ie_open('code');
                 itext('Boolean');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('--remote');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-r');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--repo');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
               ie_close('code');
             ie_close('td');
           ie_close('tr');
@@ -10876,21 +10813,24 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_close('h4');
       ie_open('ul');
         ie_open('li');
-          itext('List all gists.');
+          ie_open('strong');
+            itext('Shortcut');
+          ie_close('strong');
+          itext(' for displaying the latest activities on the current repository.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh gi --list', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh nt', mode: 'shell'}, null, opt_ijData);
       ie_open('ul');
         ie_open('li');
-          itext('List all gists from someone.');
+          itext('Display the latest activities on a certain repository.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh gi --list --user brunocoelho', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh nt --latest --user eduardolundgren --repo node-gh', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('article', null, null,
-        'id', '3');
+        'id', '2');
       ie_open('h2');
-        itext('Create');
+        itext('Watch');
       ie_close('h2');
       ie_open('table');
         ie_open('thead');
@@ -10910,80 +10850,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('-N');
+                itext('-w');
               ie_close('code');
               itext(', ');
               ie_open('code');
-                itext('--new');
+                itext('--watch');
               ie_close('code');
             ie_close('td');
             ie_open('td');
               ie_open('strong');
                 itext('Required');
               ie_close('strong');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-c');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--content');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-d');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--description');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-p');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--private');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('em');
-                itext('Optional');
-              ie_close('em');
             ie_close('td');
             ie_open('td');
               ie_open('code');
@@ -10991,66 +10868,58 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('code');
             ie_close('td');
           ie_close('tr');
-        ie_close('tbody');
-      ie_close('table');
-      ie_open('h4');
-        itext('Examples');
-      ie_close('h4');
-      ie_open('ul');
-        ie_open('li');
-          itext('Create a Gist ');
-          ie_open('code');
-            itext('hello');
-          ie_close('code');
-          itext(' containing "Hello World".');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: 'gh gi --new hello --content "Hello World!"', mode: 'shell'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Create a private Gist ');
-          ie_open('code');
-            itext('hello');
-          ie_close('code');
-          itext(' containing "Hello World".');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: 'gh gi --new hello --content "Hello World!" --private', mode: 'shell'}, null, opt_ijData);
-    ie_close('article');
-    ie_open('article', null, null,
-        'id', '4');
-      ie_open('h2');
-        itext('Fork');
-      ie_close('h2');
-      ie_open('table');
-        ie_open('thead');
-          ie_open('tr');
-            ie_open('th');
-              itext('Option');
-            ie_close('th');
-            ie_open('th');
-              itext('Usage');
-            ie_close('th');
-            ie_open('th');
-              itext('Type');
-            ie_close('th');
-          ie_close('tr');
-        ie_close('thead');
-        ie_open('tbody');
           ie_open('tr');
             ie_open('td');
               ie_open('code');
-                itext('-f');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--fork');
+                itext('--remote');
               ie_close('code');
             ie_close('td');
             ie_open('td');
-              ie_open('strong');
-                itext('Required');
-              ie_close('strong');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-r');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--repo');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
+            ie_close('td');
+            ie_open('td');
+              ie_open('code');
+                itext('String');
+              ie_close('code');
+            ie_close('td');
+          ie_close('tr');
+          ie_open('tr');
+            ie_open('td');
+              ie_open('code');
+                itext('-u');
+              ie_close('code');
+              itext(', ');
+              ie_open('code');
+                itext('--user');
+              ie_close('code');
+            ie_close('td');
+            ie_open('td');
+              ie_open('em');
+                itext('Optional');
+              ie_close('em');
             ie_close('td');
             ie_open('td');
               ie_open('code');
@@ -11065,69 +10934,16 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_close('h4');
       ie_open('ul');
         ie_open('li');
-          itext('Fork a Gist.');
+          itext('Watch for any activity on the current repository.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh gi --fork 5444883', mode: 'shell'}, null, opt_ijData);
-    ie_close('article');
-    ie_open('article', null, null,
-        'id', '5');
-      ie_open('h2');
-        itext('Delete');
-      ie_close('h2');
-      ie_open('table');
-        ie_open('thead');
-          ie_open('tr');
-            ie_open('th');
-              itext('Option');
-            ie_close('th');
-            ie_open('th');
-              itext('Usage');
-            ie_close('th');
-            ie_open('th');
-              itext('Type');
-            ie_close('th');
-          ie_close('tr');
-        ie_close('thead');
-        ie_open('tbody');
-          ie_open('tr');
-            ie_open('td');
-              ie_open('code');
-                itext('-D');
-              ie_close('code');
-              itext(', ');
-              ie_open('code');
-                itext('--delete');
-              ie_close('code');
-            ie_close('td');
-            ie_open('td');
-              ie_open('strong');
-                itext('Required');
-              ie_close('strong');
-            ie_close('td');
-            ie_open('td');
-              ie_open('code');
-                itext('String');
-              ie_close('code');
-            ie_close('td');
-          ie_close('tr');
-        ie_close('tbody');
-      ie_close('table');
-      ie_open('h4');
-        itext('Example');
-      ie_close('h4');
+      $templateAlias2({code: 'gh nt --watch', mode: 'shell'}, null, opt_ijData);
       ie_open('ul');
         ie_open('li');
-          itext('Delete a Gist.');
+          itext('Watch for any activity on a certain repository.');
         ie_close('li');
       ie_close('ul');
-      $templateAlias2({code: 'gh gi --delete 4252323', mode: 'shell'}, null, opt_ijData);
-      ie_open('ul');
-        ie_open('li');
-          itext('Delete multiple Gists.');
-        ie_close('li');
-      ie_close('ul');
-      $templateAlias2({code: 'gh gi --delete 4252321 --delete 4252322', mode: 'shell'}, null, opt_ijData);
+      $templateAlias2({code: 'gh nt --watch --user eduardolundgren --repo node-gh', mode: 'shell'}, null, opt_ijData);
     ie_close('article');
     ie_open('input', null, null,
         'type', 'hidden',
@@ -11138,11 +10954,11 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         'value', opt_data.site.title);
     ie_close('input');
   };
-  $templateAlias1(soy.$$assignDefaults({content: param294}, opt_data), null, opt_ijData);
+  $templateAlias1(soy.$$assignDefaults({content: param521}, opt_data), null, opt_ijData);
 }
 exports.render = $render;
 if (goog.DEBUG) {
-  $render.soyTemplateName = 'liBVh.render';
+  $render.soyTemplateName = 'qlktP.render';
 }
 
 exports.render.params = ["page","site"];
@@ -11152,17 +10968,14 @@ return exports;
 
 });
 
-class liBVh extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
-__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(liBVh, templates);
+class qlktP extends __WEBPACK_IMPORTED_MODULE_0_metal_component___default.a {}
+__WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(qlktP, templates);
 
 /* harmony default export */ __webpack_exports__["default"] = (templates);
 /* jshint ignore:end */
 
 
 /***/ }),
-/* 93 */,
-/* 94 */,
-/* 95 */,
 /* 96 */,
 /* 97 */,
 /* 98 */,
@@ -11170,7 +10983,9 @@ __WEBPACK_IMPORTED_MODULE_1_metal_soy___default.a.register(liBVh, templates);
 /* 100 */,
 /* 101 */,
 /* 102 */,
-/* 103 */
+/* 103 */,
+/* 104 */,
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11200,7 +11015,7 @@ __webpack_require__(11);
 
 __webpack_require__(19);
 
-var _indexSoy = __webpack_require__(92);
+var _indexSoy = __webpack_require__(95);
 
 var _indexSoy2 = _interopRequireDefault(_indexSoy);
 
@@ -11212,23 +11027,23 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var liBVh = function (_Component) {
-  _inherits(liBVh, _Component);
+var qlktP = function (_Component) {
+  _inherits(qlktP, _Component);
 
-  function liBVh() {
-    _classCallCheck(this, liBVh);
+  function qlktP() {
+    _classCallCheck(this, qlktP);
 
-    return _possibleConstructorReturn(this, (liBVh.__proto__ || Object.getPrototypeOf(liBVh)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (qlktP.__proto__ || Object.getPrototypeOf(qlktP)).apply(this, arguments));
   }
 
-  return liBVh;
+  return qlktP;
 }(_metalComponent2.default);
 
 ;
 
-_metalSoy2.default.register(liBVh, _indexSoy2.default);
+_metalSoy2.default.register(qlktP, _indexSoy2.default);
 
-exports.default = liBVh;
+exports.default = qlktP;
 
 /***/ })
-],[103]);
+],[105]);
