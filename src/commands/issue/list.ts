@@ -63,7 +63,7 @@ export async function orchestrate(
   let query = mapArgsToQuery(flags, remoteInfo, paginationInProgress, paginationCursor)
   log.query(query)
 
-  let response = await requestIssues(query)
+  let response = await queryIssues(query)
   // log.debug(JSON.stringify(response))
   log.debug(JSON.stringify(response.repository.issues, null, 4))
 
@@ -188,7 +188,7 @@ export function mapArgsToQuery(
   return compressQuery(query)
 }
 
-export async function requestIssues(query): Promise<IRepoIssues> {
+export async function queryIssues(query): Promise<IRepoIssues> {
   let response
 
   try {

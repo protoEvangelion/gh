@@ -3,7 +3,7 @@ import { responses } from './mock/responses'
 import { queries } from './mock/queries'
 import { stdout } from './mock/stdout'
 import { user, repo } from './mock/user'
-import { formatResponse, mapArgsToQuery, requestIssues } from '../../src/commands/issue/list'
+import { formatResponse, mapArgsToQuery, queryIssues } from '../../src/commands/issue/list'
 import { compressQuery } from '../../src/graphQL'
 
 const mockResponses = responses.issue.list
@@ -59,35 +59,43 @@ describe('`issue:list` Maps args to query', () => {
 
 describe('GitHub graphQL api works correctly', () => {
   it('returns correct response given base query', async () => {
-    const response = await requestIssues(mockResponses.base.request)
+    const response = await queryIssues(mockResponses.base.request)
 
     expect(JSON.stringify(response)).to.equal(mockResponses.base.response)
   })
 })
 
 describe('`issue:list` Formats/Converts response object correctly for console', () => {
+  function testIssueFormat(formattedResponse, type) {
+    formattedResponse.forEach((issue, i) => {
+      const issueWithNoDate = issue.replace(/\(.*\)/, '').trim()
+
+      expect(issueWithNoDate).to.equal(mockStdout[type][i])
+    })
+  }
+
   it('formats response for: issue:list', () => {
     const formattedResponse = formatResponse({}, JSON.parse(mockResponses.base.response))
 
-    expect(formattedResponse.join('|')).to.equal(mockStdout.base)
+    testIssueFormat(formattedResponse, 'base')
   })
 
   it('builds query for: issue:list --all', () => {
     const formattedResponse = formatResponse({ all: true }, JSON.parse(mockResponses.all))
 
-    expect(formattedResponse.join('|')).to.equal(mockStdout.all)
+    testIssueFormat(formattedResponse, 'all')
   })
 
   it(`formats response for: issue:list --assignee ${user}`, () => {
     const formattedResponse = formatResponse({ assignee: user }, JSON.parse(mockResponses.assignee))
 
-    expect(formattedResponse.join('|')).to.equal(mockStdout.assignee)
+    testIssueFormat(formattedResponse, 'assignee')
   })
 
   it('formats response for: issue:list --detailed', () => {
     const formattedResponse = formatResponse({ detailed: true }, JSON.parse(mockResponses.detailed))
 
-    expect(formattedResponse.join('|')).to.equal(mockStdout.detailed)
+    testIssueFormat(formattedResponse, 'detailed')
   })
 
   it(`builds query for: issue:list --label 'bug,good first issue'`, () => {
@@ -96,7 +104,7 @@ describe('`issue:list` Formats/Converts response object correctly for console', 
       JSON.parse(mockResponses.label)
     )
 
-    expect(formattedResponse.join('|')).to.equal(mockStdout.label)
+    testIssueFormat(formattedResponse, 'label')
   })
 
   it(`builds query for: issue:list --milestone 'milestone 1'`, () => {
@@ -105,12 +113,12 @@ describe('`issue:list` Formats/Converts response object correctly for console', 
       JSON.parse(mockResponses.milestone)
     )
 
-    expect(formattedResponse.join('|')).to.equal(mockStdout.milestone)
+    testIssueFormat(formattedResponse, 'milestone')
   })
 
   it('builds query for: issue:list --state closed', () => {
     const formattedResponse = formatResponse({ state: 'closed' }, JSON.parse(mockResponses.state))
 
-    expect(formattedResponse.join('|')).to.equal(mockStdout.state)
+    testIssueFormat(formattedResponse, 'state')
   })
 })

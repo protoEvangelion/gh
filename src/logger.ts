@@ -4,7 +4,9 @@ import * as prettier from 'prettier'
 import ctx from 'chalk'
 import { config } from './config'
 
-export const chalk = new ctx.constructor({ enabled: config.color })
+export const chalk = new ctx.constructor({
+  enabled: process.env.NODE_ENV === 'testing' ? false : config.color,
+})
 
 export function log(...messages) {
   if (process.env.NODE_ENV !== 'testing') {
