@@ -194,7 +194,7 @@ export async function queryIssues(query): Promise<IRepoIssues> {
   try {
     response = await graphQL.request<IRepoIssues>(query)
   } catch (e) {
-    throw new Error(`Error making GitHub graphQL request ===> ${e}`)
+    throw new Error(`making GitHub graphQL request ===> ${e}`)
   }
 
   return response

@@ -17,3 +17,13 @@ export interface IRemoteInfo {
   repo: string
   user: string
 }
+
+export interface INewIssue {
+  owner: string
+  repo: string
+  title: string
+  body?: string
+  assignees?: string[]
+  milestone?: number
+  labels?: string[]
+}

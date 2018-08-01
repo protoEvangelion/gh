@@ -19,3 +19,8 @@
 # Deprecating
 
 - Consider deprecating aliases
+
+## New issue
+
+- `--assignee` is now `--assignees`
+- `--label` is now `--labels`

@@ -11,7 +11,7 @@ export const chalk = new ctx.constructor({
 export function log(...messages) {
   if (process.env.NODE_ENV !== 'testing') {
     messages.forEach(msg => {
-      console.log(msg.trim(), '\n')
+      console.log(typeof msg === 'string' ? msg.trim() : msg, '\n')
     })
   }
 }
