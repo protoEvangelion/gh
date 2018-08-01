@@ -15,3 +15,7 @@
 - Remove color from output by adding "color": false in .gh.json
 
 # Non Breaking Changes
+
+# Deprecating
+
+- Consider deprecating aliases

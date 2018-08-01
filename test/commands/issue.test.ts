@@ -4,7 +4,7 @@ import { queries } from './mock/queries'
 import { stdout } from './mock/stdout'
 import { user, repo } from './mock/user'
 import { formatResponse, mapArgsToQuery, queryIssues } from '../../src/commands/issue/list'
-import { compressQuery } from '../../src/graphQL'
+import { compressQuery } from '../../src/request'
 
 const mockResponses = responses.issue.list
 const mockStdout = stdout.issue.list

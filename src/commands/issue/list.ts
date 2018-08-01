@@ -3,7 +3,7 @@ import { IRepoIssues, IPaginationInfo, IRemoteInfo } from '../../interfaces'
 import * as moment from 'moment'
 import Command from '../../base'
 import { config } from '../../config'
-import { compressQuery, graphQL } from '../../graphQL'
+import { compressQuery, graphQL } from '../../request'
 import { chalk, log } from '../../logger'
 
 export default class List extends Command {

@@ -1,7 +1,15 @@
 import { GraphQLClient } from 'graphql-request'
 import { config } from './config'
+import * as Octokit from '@octokit/rest'
 
-export const graphQL = new GraphQLClient('https://api.github.com/graphql', {
+const octokit = Octokit()
+
+octokit.authenticate({
+  type: 'oauth',
+  token: config.github_token,
+})
+
+const graphQL = new GraphQLClient('https://api.github.com/graphql', {
   headers: {
     Authorization: `Bearer ${config.github_token}`,
   },
@@ -13,7 +21,9 @@ export const graphQL = new GraphQLClient('https://api.github.com/graphql', {
  * https://github.com/jeromecovington/graphql-compress/blob/master/index.js
  *
  */
-export function compressQuery(text: string): string {
+function compressQuery(text: string): string {
   const query = text.replace(/\s+/g, ' ')
   return query.replace(/\s*(\[|\]|\{|\}|\(|\)|:|\,)\s*/g, '$1')
 }
+
+export { octokit, graphQL, compressQuery }
