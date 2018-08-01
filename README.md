@@ -30,6 +30,12 @@
 * [History](#history)
 * [License](#license)
 
+## Suported Node Versions:
+
+- We support the node versions that the NodeJS organization supports which as of now is Node v6 & up.
+
+<p><img src="schedule.png" alt="LTS Schedule"/></p>
+
 ## Install
 
     [sudo] npm install -g gh

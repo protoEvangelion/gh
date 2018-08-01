@@ -97,6 +97,7 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1.15.4",
     "@oclif/test": "^1.1.0",
+    "@octokit/fixtures": "^8.3.1",
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/node": "^7.0.67",
