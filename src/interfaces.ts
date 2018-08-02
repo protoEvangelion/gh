@@ -1,3 +1,11 @@
+export interface IRepoIssue {
+  repository: {
+    issue: {
+      id: number
+    }
+  }
+}
+
 export interface IRepoIssues {
   repository: {
     issues: {
@@ -18,7 +26,7 @@ export interface IRemoteInfo {
   user: string
 }
 
-export interface INewIssue {
+export interface ICreateIssue {
   owner: string
   repo: string
   title: string

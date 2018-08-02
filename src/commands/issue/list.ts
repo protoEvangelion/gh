@@ -3,7 +3,8 @@ import { IRepoIssues, IPaginationInfo, IRemoteInfo } from '../../interfaces'
 import * as moment from 'moment'
 import Command from '../../base'
 import { config } from '../../config'
-import { compressQuery, graphQL } from '../../request'
+import { graphQL } from '../../request'
+import { compressQuery, trimLeadingSpaces } from '../../utils'
 import { chalk, log } from '../../logger'
 
 export default class List extends Command {
@@ -64,7 +65,6 @@ export async function orchestrate(
   log.query(query)
 
   let response = await queryIssues(query)
-  // log.debug(JSON.stringify(response))
   log.debug(JSON.stringify(response.repository.issues, null, 4))
 
   let formattedIssues = formatResponse(flags, response)
@@ -257,10 +257,6 @@ export function formatResponse(flags, response): string[] {
     }
 
     formattedIssues.push(trimLeadingSpaces(formattedIssue))
-  }
-
-  function trimLeadingSpaces(str) {
-    return str.replace(/^[ ]+/gm, '')
   }
 
   return formattedIssues

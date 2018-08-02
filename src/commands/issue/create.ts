@@ -1,11 +1,11 @@
 import { flags } from '@oclif/command'
-import { INewIssue, IRemoteInfo } from '../../interfaces'
+import { ICreateIssue, IRemoteInfo } from '../../interfaces'
 import Command from '../../base'
-// import { config } from '../../config'
 import { octokit } from '../../request'
+import { trimLeadingSpaces } from '../../utils'
 import { chalk, log } from '../../logger'
 
-export default class New extends Command {
+export default class Create extends Command {
   public static description = 'Create a new issue'
 
   public static flags = {
@@ -31,10 +31,11 @@ export default class New extends Command {
   }
 
   public async run() {
-    const { flags } = this.parse(New)
+    const { flags } = this.parse(Create)
 
     try {
       var response = await octokit.issues.create(mapArgsToObject(flags, this.remoteInfo))
+      log.debug(response)
     } catch (e) {
       throw new Error(`creating a new issue ===> ${e}`)
     }
@@ -43,15 +44,14 @@ export default class New extends Command {
       var formattedResponse = formatResponse(this.remoteInfo, response.data.number)
     } else {
       throw new Error(`creating a new issue exited with status of ${response.status}`)
-      log.debug(response)
     }
 
     log(formattedResponse)
   }
 }
 
-export function mapArgsToObject(flags, remoteInfo: IRemoteInfo): INewIssue {
-  const requestObj: INewIssue = {
+export function mapArgsToObject(flags, remoteInfo: IRemoteInfo): ICreateIssue {
+  const requestObj: ICreateIssue = {
     owner: remoteInfo.user,
     repo: remoteInfo.repo,
     title: flags.title,
@@ -81,10 +81,6 @@ export function mapArgsToObject(flags, remoteInfo: IRemoteInfo): INewIssue {
 }
 
 export function formatResponse(remoteInfo: IRemoteInfo, newIssueNumber): string {
-  function trimLeadingSpaces(str) {
-    return str.replace(/^[ ]+/gm, '')
-  }
-
   const formattedResponse = `
     Creating a new issue on ${chalk.green(`${remoteInfo.user}/${remoteInfo.repo}`)}
     https://github.com/${remoteInfo.user}/${remoteInfo.repo}/issues/${newIssueNumber}

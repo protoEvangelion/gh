@@ -35,9 +35,9 @@ export namespace log {
   export function debug(...msg) {
     if (process.env.DEBUG === 'true') {
       console.log(
-        chalk.yellow('Debug ============ > \n\n'),
+        chalk.yellow('Debug ============ \n\n'),
         ...msg,
-        chalk.yellow('\n======================')
+        chalk.yellow('\n==================\n')
       )
     }
   }
