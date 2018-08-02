@@ -1,10 +1,10 @@
 import { expect } from '@oclif/test'
-import { responses } from './mock/responses'
-import { queries } from './mock/queries'
-import { stdout } from './mock/stdout'
-import { user, repo } from './mock/user'
-import { formatResponse, mapArgsToQuery, queryIssues } from '../../src/commands/issue/list'
-import { compressQuery } from '../../src/utils'
+import { responses } from '../mock/responses'
+import { queries } from '../mock/queries'
+import { stdout } from '../mock/stdout'
+import { user, repo } from '../mock/user'
+import { formatResponse, mapArgsToQuery, queryIssues } from '../../../src/commands/issue/list'
+import { compressQuery } from '../../../src/utils'
 
 const mockResponses = responses.issue.list
 const mockStdout = stdout.issue.list

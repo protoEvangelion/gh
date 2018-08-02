@@ -5,6 +5,10 @@ const { node_limit } = config.graphql
 
 export const queries = {
   issue: {
+    comment: {
+      base: `{repository(owner:"${user}",name:"${repo}"){issue(number:1){id}}}`,
+      mutation: `mutation{addComment(input:{subjectId:"MDU6SXNzdWUyODUzMzU0MTc=",body:"undefined"}){commentEdge{node{url}}}}`,
+    },
     list: {
       all: `{repository(owner:"${user}",name:"${repo}"){issues(before:"Y3Vyc29yOnYyOpHOFHDA0A==",last:${node_limit},){edges{node{author{login}createdAt number title url}}pageInfo{startCursor hasPreviousPage}}}}`,
       assignee: `{repository(owner:"${user}",name:"${repo}"){issues(last:${node_limit},){edges{node{assignees(first:100){edges{node{login}}}author{login}createdAt number title url}}}}}`,

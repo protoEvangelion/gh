@@ -1,5 +1,10 @@
 export const responses = {
   issue: {
+    comment: {
+      query: '{"repository":{"issue":{"id":"MDU6SXNzdWUyODUzMzU0MTc="}}}',
+      mutation:
+        '{"addComment":{"commentEdge":{"node":{"url":"https://github.com/protoEvangelion/gh/issues/2#issuecomment-409807556"}}}}',
+    },
     list: {
       all:
         '{"repository":{"issues":{"edges":[{"node":{"author":{"login":"protoEvangelion"},"createdAt":"2018-01-01T23:07:50Z","number":2,"title":"test2","url":"https://github.com/protoEvangelion/gh/issues/2"}},{"node":{"author":{"login":"protoEvangelion"},"createdAt":"2018-07-08T02:57:55Z","number":4,"title":"issue 3","url":"https://github.com/protoEvangelion/gh/issues/4"}}],"pageInfo":{"startCursor":"Y3Vyc29yOnYyOpHOEQHfeQ==","hasPreviousPage":true}}}}',

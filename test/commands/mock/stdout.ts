@@ -1,5 +1,9 @@
 export const stdout = {
   issue: {
+    comment: {
+      base:
+        'Adding comment on issue #1\nhttps://github.com/protoEvangelion/gh/issues/2#issuecomment-409807556',
+    },
     list: {
       all: ['#4 issue 3 @protoEvangelion', '#2 test2 @protoEvangelion'],
       assignee: ['#10 node-gh @protoEvangelion'],

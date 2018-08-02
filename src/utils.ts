@@ -1,5 +1,5 @@
 export function trimLeadingSpaces(str): string {
-  return str.replace(/^[ ]+/gm, '')
+  return str.replace(/^[ ]+/gm, '').trim()
 }
 
 /**
@@ -10,5 +10,7 @@ export function trimLeadingSpaces(str): string {
  */
 export function compressQuery(text: string): string {
   const query = text.replace(/\s+/g, ' ')
-  return query.replace(/\s*(\[|\]|\{|\}|\(|\)|:|\,)\s*/g, '$1')
+  const compressedQuery = query.replace(/\s*(\[|\]|\{|\}|\(|\)|:|\,)\s*/g, '$1')
+
+  return trimLeadingSpaces(compressedQuery)
 }
