@@ -29,46 +29,47 @@ export default class Comment extends Command {
   public async run() {
     const { args } = this.parse(Comment)
 
-    if (!args.message) {
-      throw new Error(
-        'please add the comment flag with a string you would like to comment on an issue with.'
-      )
-    }
-
-    if (!args.number) {
-      throw new Error(
-        'please add the number flag with the number of the issue you would like to comment on.'
-      )
-    }
-
-    const query = mapArgsToQuery(args, this.remoteInfo)
-
-    try {
-      log.debug(query)
-
-      var queryResponse = await graphQL.request<IRepoIssue>(query)
-
-      log.debug(JSON.stringify(queryResponse, null, 4))
-    } catch (e) {
-      throw new Error(`getting issue by number with graphQL query ===> ${e}`)
-    }
-
-    const mutationString = mapResponseToMutation(args, queryResponse)
-
-    try {
-      log.debug(mutationString)
-
-      var mutationResponse = await graphQL.request<IRepoIssue>(mutationString)
-
-      log.debug(JSON.stringify(mutationResponse, null, 4))
-    } catch (e) {
-      throw new Error(`adding comment to issue with graphQL mutation ===> ${e}`)
-    }
-
-    const formattedResponse = formatResponse(args, mutationResponse)
-
-    log(formattedResponse)
+    runCommentCmd(args, this.remoteInfo)
   }
+}
+
+export async function runCommentCmd(args, remoteInfo: IRemoteInfo) {
+  if (!args.message) {
+    throw new Error(
+      'please add the comment flag with a string you would like to comment on an issue with.'
+    )
+  }
+
+  if (!args.number) {
+    throw new Error(
+      'please add the number flag with the number of the issue you would like to comment on.'
+    )
+  }
+
+  const query = mapArgsToQuery(args, remoteInfo)
+  log.debug(query)
+
+  try {
+    var queryResponse = await graphQL.request<IRepoIssue>(query)
+  } catch (e) {
+    throw new Error(`getting issue by number with graphQL query ===> ${e}`)
+  }
+
+  const mutationString = mapResponseToMutation(args, queryResponse)
+
+  log.debug(JSON.stringify(queryResponse, null, 4))
+  log.debug(mutationString)
+
+  try {
+    var mutationResponse = await graphQL.request<IRepoIssue>(mutationString)
+  } catch (e) {
+    throw new Error(`adding comment to issue with graphQL mutation ===> ${e}`)
+  }
+
+  const formattedResponse = formatResponse(args, mutationResponse)
+
+  log.debug(JSON.stringify(mutationResponse, null, 4))
+  log(formattedResponse)
 }
 
 export function mapArgsToQuery(args, remoteInfo: IRemoteInfo): string {
