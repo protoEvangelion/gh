@@ -37,44 +37,37 @@ export default class List extends Command {
   public async run() {
     const { flags } = this.parse(List)
 
-    let paginationInProgress = flags.all
-
-    if (paginationInProgress) {
-      let paginationCursor = null
-
-      while (paginationInProgress) {
-        const pageInfo = await orchestrate(
-          flags,
-          this.remoteInfo,
-          paginationInProgress,
-          paginationCursor
-        )
-
-        paginationInProgress = pageInfo.hasPreviousPage
-        paginationCursor = pageInfo.startCursor
-      }
-    } else {
-      orchestrate(flags, this.remoteInfo, false)
-    }
+    runListCmd(flags, this.remoteInfo)
   }
 }
 
-export async function orchestrate(
-  flags,
-  remoteInfo: IRemoteInfo,
-  paginationInProgress,
-  paginationCursor?
-): Promise<IPaginationInfo> {
-  let query = mapArgsToQuery(flags, remoteInfo, paginationInProgress, paginationCursor)
-  log.query(query)
+export async function runListCmd(flags, remoteInfo: IRemoteInfo) {
+  let paginationInProgress = flags.all
+  let paginationCursor
 
-  let response = await queryIssues(query)
-  log.debug(JSON.stringify(response.repository.issues, null, 4))
+  if (paginationInProgress) {
+    while (paginationInProgress) {
+      const pageInfo = await makeRequest()
 
-  let formattedIssues = formatResponse(flags, response)
-  log(...formattedIssues)
+      paginationInProgress = pageInfo.hasPreviousPage
+      paginationCursor = pageInfo.startCursor
+    }
+  } else {
+    await makeRequest()
+  }
 
-  return response.repository.issues.pageInfo
+  async function makeRequest(): Promise<IPaginationInfo> {
+    let query = mapArgsToQuery(flags, remoteInfo, paginationInProgress, paginationCursor)
+    log.query(query)
+
+    let response = await queryIssues(query)
+    log.debug(JSON.stringify(response.repository.issues, null, 4))
+
+    let formattedIssues = formatResponse(flags, response)
+    log(...formattedIssues)
+
+    return response.repository.issues.pageInfo
+  }
 }
 
 export function mapArgsToQuery(

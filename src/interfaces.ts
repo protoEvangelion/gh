@@ -26,7 +26,17 @@ export interface IRemoteInfo {
   user: string
 }
 
-export interface ICreateIssue {
+export interface IBaseIssueRequest {
+  owner: string
+  repo: string
+}
+
+export interface IStateIssueRequest extends IBaseIssueRequest {
+  number: number
+  state: 'open' | 'closed'
+}
+
+export interface INewIssueRequest extends IBaseIssueRequest {
   owner: string
   repo: string
   title: string

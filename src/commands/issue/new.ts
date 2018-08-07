@@ -1,5 +1,5 @@
 import { flags } from '@oclif/command'
-import { ICreateIssue, IRemoteInfo } from '../../interfaces'
+import { INewIssueRequest, IRemoteInfo } from '../../interfaces'
 import Command from '../../base'
 import { octokit } from '../../request'
 import { trimLeadingSpaces } from '../../utils'
@@ -57,8 +57,8 @@ export async function runNewCmd(flags, remoteInfo) {
   log(formattedResponse)
 }
 
-export function mapArgsToObject(flags, remoteInfo: IRemoteInfo): ICreateIssue {
-  const requestObj: ICreateIssue = {
+export function mapArgsToObject(flags, remoteInfo: IRemoteInfo): INewIssueRequest {
+  const requestObj: INewIssueRequest = {
     owner: remoteInfo.user,
     repo: remoteInfo.repo,
     title: flags.title,

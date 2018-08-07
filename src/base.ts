@@ -9,7 +9,7 @@ import { config } from './config'
 const git = simpleGit()
 
 export default abstract class extends Command {
-  public static flags = {
+  public static flags: any = {
     debug: flags.boolean({
       description: 'A more complete info flag, which leaks more privacy sensitive data by default.',
     }),
