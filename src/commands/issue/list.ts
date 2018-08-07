@@ -7,27 +7,31 @@ import { graphQL } from '../../request'
 import { compressQuery, trimLeadingSpaces } from '../../utils'
 import { chalk, log } from '../../logger'
 
+export const listCmdFlags = {
+  help: flags.help({ char: 'h' }),
+  all: flags.boolean({ char: 'a', description: 'List all issues' }),
+  assignee: flags.string({
+    char: 'A',
+    description: 'Filter issues by assignee(case sensitive) login id',
+  }),
+  detailed: flags.boolean({ char: 'd', description: 'Show detailed version of issues' }),
+  label: flags.string({
+    char: 'L',
+    description: 'Filter issues by label(s). If multiple labels they should be comma separated',
+  }),
+  milestone: flags.string({
+    char: 'M',
+    description: 'Filter issues by milestone (case insensitive)',
+  }),
+  state: flags.string({ char: 'S', description: 'Filter by closed or open issues' }),
+}
+
 export default class List extends Command {
   public static description = 'List & filter issues'
 
   public static flags = {
     ...Command.flags,
-    help: flags.help({ char: 'h' }),
-    all: flags.boolean({ char: 'a', description: 'List all issues' }),
-    assignee: flags.string({
-      char: 'A',
-      description: 'Filter issues by assignee(case sensitive) login id',
-    }),
-    detailed: flags.boolean({ char: 'd', description: 'Show detailed version of issues' }),
-    label: flags.string({
-      char: 'L',
-      description: 'Filter issues by label(s). If multiple labels they should be comma separated',
-    }),
-    milestone: flags.string({
-      char: 'M',
-      description: 'Filter issues by milestone (case insensitive)',
-    }),
-    state: flags.string({ char: 'S', description: 'Filter by closed or open issues' }),
+    ...listCmdFlags,
   }
 
   public async run() {

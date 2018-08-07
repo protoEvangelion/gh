@@ -35,3 +35,14 @@ export interface ICreateIssue {
   milestone?: number
   labels?: string[]
 }
+
+export interface IFlags {
+  name: string
+  char?: string
+  description?: string
+  hidden?: boolean
+  required?: boolean
+  dependsOn?: string[]
+  exclusive?: string[]
+  env?: string
+}

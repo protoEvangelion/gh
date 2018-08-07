@@ -7,12 +7,12 @@ import { chalk, log } from '../../logger'
 
 export const newCmdFlags = {
   help: flags.help({ char: 'h' }),
-  assignees: flags.string({
+  assignee: flags.string({
     char: 'A',
     description:
       'Logins for Users to assign to this issue NOTE: Only users with push access can set assignees for new issues. Assignees are silently dropped otherwise',
   }),
-  labels: flags.string({
+  label: flags.string({
     char: 'L',
     description:
       'Labels to associate with this issue. NOTE: Only users with push access can set labels for new issues. Labels are silently dropped otherwise',
@@ -23,7 +23,6 @@ export const newCmdFlags = {
     description:
       'The number of the milestone to associate this issue with. NOTE: Only users with push access can set the milestone for new issues. The milestone is silently dropped otherwise',
   }),
-  title: flags.string({ char: 't', description: 'The title of the issue' }),
 }
 
 export default class New extends Command {
@@ -73,16 +72,16 @@ export function mapArgsToObject(flags, remoteInfo: IRemoteInfo): ICreateIssue {
     requestObj.body = flags.message
   }
 
-  if (flags.assignees) {
-    requestObj.assignees = flags.assignees.split(',')
+  if (flags.assignee) {
+    requestObj.assignees = flags.assignee.split(',')
   }
 
   if (flags.milestone) {
     requestObj.milestone = flags.milestone
   }
 
-  if (flags.labels) {
-    requestObj.labels = flags.labels.split(',')
+  if (flags.label) {
+    requestObj.labels = flags.label.split(',')
   }
 
   return requestObj
