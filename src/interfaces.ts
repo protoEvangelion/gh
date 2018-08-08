@@ -26,17 +26,17 @@ export interface IRemoteInfo {
   user: string
 }
 
-export interface IBaseIssueRequest {
+export interface IBaseIssueParams {
   owner: string
   repo: string
 }
 
-export interface IStateIssueRequest extends IBaseIssueRequest {
+export interface IStateIssueParams extends IBaseIssueParams {
   number: number
   state: 'open' | 'closed'
 }
 
-export interface INewIssueRequest extends IBaseIssueRequest {
+export interface INewIssueParams extends IBaseIssueParams {
   owner: string
   repo: string
   title: string
@@ -44,6 +44,14 @@ export interface INewIssueRequest extends IBaseIssueRequest {
   assignees?: string[]
   milestone?: number
   labels?: string[]
+}
+
+export interface ISearchIssuesParams {
+  q: string
+  sort?: 'comments' | 'created' | 'updated'
+  order?: 'asc' | 'desc'
+  per_page?: number
+  page?: number
 }
 
 export interface IFlags {

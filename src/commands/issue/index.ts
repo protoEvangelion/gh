@@ -1,11 +1,11 @@
 import Command from '../../base'
 import { IFlags } from '../../interfaces'
 import { runCommentCmd } from './comment'
+import { runBrowserCmd } from './browser'
 import { newCmdFlags, runNewCmd } from './new'
 import { listCmdFlags, runListCmd } from './list'
 import { runStateCmd, stateCmdFlags } from './state'
 import { forEach } from 'lodash'
-import { flags } from '@oclif/command'
 
 export default class Issue extends Command {
   public static args = [
@@ -30,12 +30,15 @@ export default class Issue extends Command {
   public async run() {
     const { args, flags } = this.parse(Issue)
 
+    const isShortcutForBrowser = Number(args.number_or_title) && !args.comment_or_body
     const isShortcutForComment = Number(args.number_or_title) && args.comment_or_body
     const isShorcutForListIssues = !args.number_or_title && !args.comment_or_body
     const isShorcutForNewIssue = !Number(args.number_or_title) && args.comment_or_body
     const isShortcutForOpenCloseIssue = Number(args.number_or_title) && (flags.open || flags.close)
 
-    if (isShortcutForComment) {
+    if (isShortcutForBrowser) {
+      runBrowserCmd(args.number_or_title, this.remoteInfo)
+    } else if (isShortcutForComment) {
       const adjustedArgs = {
         number: args.number_or_title,
         message: args.comment_or_body,
@@ -62,7 +65,7 @@ export default class Issue extends Command {
 
 function generateFlags() {
   const flagsArr = [
-    { flags: { ...Command.flags, help: flags.help({ char: 'h' }) }, namespace: 'global' },
+    { flags: { ...Command.flags }, namespace: 'global' },
     { flags: { ...listCmdFlags }, namespace: 'issue:list' },
     { flags: { ...newCmdFlags }, namespace: 'issue:new' },
     { flags: { ...stateCmdFlags }, namespace: 'issue:state' },

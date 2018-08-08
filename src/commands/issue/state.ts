@@ -1,12 +1,11 @@
 import { flags } from '@oclif/command'
-import { IStateIssueRequest, IRemoteInfo } from '../../interfaces'
+import { IStateIssueParams, IRemoteInfo } from '../../interfaces'
 import Command from '../../base'
 import { octokit } from '../../request'
 import { trimLeadingSpaces } from '../../utils'
 import { chalk, log } from '../../logger'
 
 export const stateCmdFlags = {
-  help: flags.help({ char: 'h' }),
   open: flags.boolean({
     char: 'o',
     description: 'Open an issue',
@@ -57,8 +56,8 @@ export async function runStateCmd(number, flags, remoteInfo) {
   log(formattedResponse)
 }
 
-export function mapArgsToRequestObject(number, flags, remoteInfo: IRemoteInfo): IStateIssueRequest {
-  const requestObj: IStateIssueRequest = {
+export function mapArgsToRequestObject(number, flags, remoteInfo: IRemoteInfo): IStateIssueParams {
+  const requestObj: IStateIssueParams = {
     number,
     owner: remoteInfo.user,
     repo: remoteInfo.repo,

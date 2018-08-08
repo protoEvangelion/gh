@@ -1,4 +1,3 @@
-import { flags } from '@oclif/command'
 import { IRepoIssue, IRemoteInfo } from '../../interfaces'
 import Command from '../../base'
 import { compressQuery, trimLeadingSpaces } from '../../utils'
@@ -23,7 +22,6 @@ export default class Comment extends Command {
 
   public static flags = {
     ...Command.flags,
-    help: flags.help({ char: 'h' }),
   }
 
   public async run() {

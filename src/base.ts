@@ -10,6 +10,7 @@ const git = simpleGit()
 
 export default abstract class extends Command {
   public static flags: any = {
+    help: flags.help({ char: 'h' }),
     debug: flags.boolean({
       description: 'A more complete info flag, which leaks more privacy sensitive data by default.',
     }),
@@ -78,9 +79,8 @@ export default abstract class extends Command {
     if (remotesArr.length === 1) {
       remote = remotesArr[0].refs.fetch
     }
-
     const user = this.flags.user ? this.flags.user : remote.match('github[.]com.(.*)/')![1]
-    const repo = this.flags.repo ? this.flags.repo : remote.match(`${user}/(.*)[.]git`)![1]
+    const repo = this.flags.repo ? this.flags.repo : remote.match('/(.*)[.]git')![1]
 
     this.remoteInfo = {
       remote,

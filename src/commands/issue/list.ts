@@ -8,7 +8,6 @@ import { compressQuery, trimLeadingSpaces } from '../../utils'
 import { chalk, log } from '../../logger'
 
 export const listCmdFlags = {
-  help: flags.help({ char: 'h' }),
   all: flags.boolean({ char: 'a', description: 'List all issues' }),
   assignee: flags.string({
     char: 'A',
