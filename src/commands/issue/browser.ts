@@ -1,5 +1,5 @@
 import Command from '../../base'
-import * as openUrl from 'opn'
+import cli from 'cli-ux'
 
 export default class Browser extends Command {
   public static args = [
@@ -23,8 +23,8 @@ export default class Browser extends Command {
   }
 }
 
-export function runBrowserCmd(number, remoteInfo) {
-  openUrl(formatUrl(number, remoteInfo), { wait: false })
+export async function runBrowserCmd(number, remoteInfo) {
+  await cli.open(formatUrl(number, remoteInfo))
 }
 
 export function formatUrl(number, remoteInfo): string {

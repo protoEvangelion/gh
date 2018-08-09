@@ -81,7 +81,7 @@ export function mapArgsToQuery(
   let labelsArgument = ''
   let labelsField = ''
   let milestoneField = ''
-  let numberOfItems = config.graphql.node_limit
+  let numberOfItems = config.api.request_per_page_limit
   let paginationFields = ''
   let statesArgument = ''
 
@@ -89,7 +89,6 @@ export function mapArgsToQuery(
 
   if (paginationInProgress) {
     beforeArgument = paginationCursor ? `before: "${paginationCursor}",` : ''
-    numberOfItems = config.graphql.pagination_node_limit
 
     paginationFields = `
       pageInfo {
