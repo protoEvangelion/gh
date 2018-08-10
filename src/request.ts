@@ -22,7 +22,8 @@ async function paginateOctokit(method, requestObj) {
 
   const paginatedRequestObj = {
     ...requestObj,
-    per_page: config.api.request_per_page_limit,
+    per_page: 100,
+    // per_page: config.api.request_per_page_limit,
   }
 
   try {
