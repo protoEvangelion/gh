@@ -91,6 +91,7 @@
     "@octokit/rest": "^15.9.5",
     "chalk": "^2.4.1",
     "cli-ux": "^4.7.3",
+    "global-modules": "^1.0.0",
     "graphql-request": "^1.6.0",
     "moment": "^2.22.2",
     "request": "^2.88.0",
