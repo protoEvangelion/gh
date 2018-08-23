@@ -90,4 +90,11 @@ export default abstract class extends Command {
 
     log.debug(`Remote: ${remoteName} \n`, `Repo: ${repo} \n`, `Owner: ${user} \n`)
   }
+
+  /*
+  * This method exists for backwards compatibility of plugins for v1.x
+  */
+  public static getConfig() {
+    return config
+  }
 }

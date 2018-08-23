@@ -42,7 +42,10 @@
     "bin": "gh",
     "plugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "hooks": {
+      "command_not_found": "./lib/hooks/command_not_found/checkPlugin"
+    }
   },
   "engines": {
     "node": ">=6"
@@ -90,6 +93,7 @@
     "cli-ux": "^4.7.3",
     "graphql-request": "^1.6.0",
     "moment": "^2.22.2",
+    "request": "^2.88.0",
     "simple-git": "^1.96.0",
     "tslib": "^1.9.3",
     "userhome": "^1.0.0"
