@@ -41,7 +41,8 @@
     "commands": "./lib/commands",
     "bin": "gh",
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
     ],
     "hooks": {
       "command_not_found": "./lib/hooks/command_not_found/checkPlugin"
@@ -88,6 +89,7 @@
     "@oclif/command": "^1.4.34",
     "@oclif/config": "^1.6.33",
     "@oclif/plugin-help": "^2.0.5",
+    "@oclif/plugin-plugins": "^1.6.1",
     "@octokit/rest": "^15.9.5",
     "chalk": "^2.4.1",
     "cli-ux": "^4.7.3",
@@ -95,6 +97,7 @@
     "graphql-request": "^1.6.0",
     "moment": "^2.22.2",
     "request": "^2.88.0",
+    "requireg": "^0.2.1",
     "simple-git": "^1.96.0",
     "tslib": "^1.9.3",
     "userhome": "^1.0.0"
