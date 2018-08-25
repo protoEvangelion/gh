@@ -41,7 +41,8 @@
     "commands": "./lib/commands",
     "bin": "gh",
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
     ]
   },
   "engines": {
@@ -96,6 +97,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.15.4",
+    "@oclif/plugin-plugins": "^1.6.1",
     "@oclif/test": "^1.1.0",
     "@octokit/fixtures": "^8.3.1",
     "@types/chai": "^4.1.4",
