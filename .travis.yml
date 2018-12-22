@@ -1,5 +1,9 @@
 language: node_js
 sudo: false
+node_js:
+    - '8'
+    - '9'
+    - '10'
 env:
     - FORCE_COLOR=true
 
@@ -17,11 +21,6 @@ script:
 
 jobs:
     include:
-        - stage: test
-          node_js:
-              - '8'
-              - '9'
-              - '10'
         - stage: release
           node_js: lts/*
           script: npx semantic-release
