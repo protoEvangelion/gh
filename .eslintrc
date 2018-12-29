@@ -27,6 +27,7 @@
         "no-shadow": 0,
         "no-unsafe-finally": 0,
         "no-useless-escape": 0,
+        "no-regex-spaces": 0,
         "padded-blocks": 0
     }
 }
