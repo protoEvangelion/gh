@@ -118,10 +118,12 @@ gh pull-request
 | `--sort`           | _Optional_   | [`created`, `updated`, `popularity`, `long-running`, `complexity`] |
 | `-S`, `--state`    | _Optional_   | [`open`, `closed`]                                                 |
 | `-u`, `--user`     | _Optional_   | `String`                                                           |
+| `--link`           | _Optional_   | `Boolean`                                                          |
 
 #### Examples
 
 -   **Shortcut** for listing open pull requests for the current repository.
+-   To pretty print output in a table add `"pretty_print": true` to your `~/.gh-json` config
 
 ```
 gh pr
@@ -179,6 +181,12 @@ gh pr --list --sort long-running --direction asc
 
 ```
 gh pr --list --sort complexity
+```
+
+-   List open pull requests with their link
+
+```
+gh pr --list --link
 ```
 
 ### 3. Fetch
