@@ -50,7 +50,15 @@ function prepareTestFixtures(cmdName, argv) {
         },
         {
             name: 'PullRequest',
-            flags: ['--info', '--fetch', '--comment', '--open', '--close', '--submit'],
+            flags: [
+                '--detailed',
+                '--info',
+                '--fetch',
+                '--comment',
+                '--open',
+                '--close',
+                '--submit',
+            ],
         },
     ].filter(cmd => filterByCmdName(cmd, cmdName))
 

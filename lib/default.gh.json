@@ -119,7 +119,5 @@
 
     "ssh": true,
 
-    "color": true,
-
     "signature": ""
 }
