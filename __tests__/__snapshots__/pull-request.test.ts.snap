@@ -36,6 +36,11 @@ https://github.com/protoEvangelion/gh/pull/50
 exports[`E2E: Pull Request Module Test Submit PR \`gh pr -s protoEvangelion -b master -t "pr title" -D "pr description"\` 1`] = `
 "Submitting pull request to @protoEvangelion
 https://github.com/protoEvangelion/gh/pull/55
+[hook] gh pr 621 --user protoEvangelion --repo gh --comment 'Pull request submitted to https://github.com/protoEvangelion/gh/pull/55.…
+Adding comment on pull request #621
 [hook] gh pr --browser  --user protoEvangelion --repo gh --number 55
+[hook] gh pr --user protoEvangelion --repo gh 621 --close
+Closing pull request #621
+https://github.com/protoEvangelion/gh/pull/50
 "
 `;
