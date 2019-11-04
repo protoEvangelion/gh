@@ -1,6 +1,6 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -10,6 +10,11 @@ import { runCmd } from './testUtils'
 describe('E2E: Gist Module Test', () => {
     it('List Gists `gh gi`', done => {
         expect(runCmd('gh gi')).toMatchSnapshot()
+        done()
+    })
+
+    it('Open gist in browser `gh gi --browser --id 5444883`', done => {
+        expect(runCmd('gh gi --browser --id 5444883')).toMatchSnapshot()
         done()
     })
 

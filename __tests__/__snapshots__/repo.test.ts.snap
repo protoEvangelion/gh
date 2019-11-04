@@ -10,13 +10,18 @@ https://github.com/protoEvangelion/foo
 exports[`E2E: Repo Module Test Delete repo \`gh re --delete foo\` 1`] = `
 "Deleting repo protoEvangelion/foo
 ? Are you sure? This action CANNOT be undone. [y/N] ? Are you sure? This action CANNOT be undone. [y/N] y? Are you sure? This action CANNOT be undone. [y/N] y
-Successfully deleted repo.
+✓ Successfully deleted repo.
 "
 `;
 
 exports[`E2E: Repo Module Test Fork a repo \`gh re --fork prettier --user prettier\` 1`] = `
 "Forking repo prettier/prettier into protoEvangelion/prettier
 Successfully forked: https://github.com/protoEvangelion/prettier
+"
+`;
+
+exports[`E2E: Repo Module Test List Repos \`gh re --browser\` 1`] = `
+"https://github.com/protoEvangelion/gh
 "
 `;
 
@@ -32,5 +37,15 @@ exports[`E2E: Repo Module Test List labels on a repo \`gh re --label --list --re
 --user
 duplicate
 enhancement
+"
+`;
+
+exports[`E2E: Repo Module Test Search repositories from GitHub org showing detailed results. \`gh re --detailed --search octocat org:github\` 1`] = `
+"Searching for repos using the criteria: octocat org:github
+github/octocatalog-diff
+https://github.com/github/octocatalog-diff
+Compile Puppet catalogs from 2 branches, versions, etc., and compare them
+https://rubygems.org/gems/octocatalog-diff/
+last update in 4 years
 "
 `;

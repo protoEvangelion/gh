@@ -1,12 +1,11 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 // -- Requires -------------------------------------------------------------------------------------
 
-import * as nopt from 'nopt'
 import * as path from 'path'
 import * as stream from 'stream'
 import * as url from 'url'
@@ -14,18 +13,13 @@ import * as base from '../base'
 import * as configs from '../configs'
 import * as logger from '../logger'
 
-// -- Constructor ----------------------------------------------------------------------------------
-
-export default function Help() {
-    this.options = nopt(Help.DETAILS.options, Help.DETAILS.shorthands, process.argv, 2)
-}
-
 // -- Constants ------------------------------------------------------------------------------------
 
 // allows to run program as js or ts
 const extension = __filename.slice(__filename.lastIndexOf('.') + 1)
 
-Help.DETAILS = {
+export const name = 'Help'
+export const DETAILS = {
     description: 'List all commands and options available.',
     options: {
         all: Boolean,
@@ -39,13 +33,11 @@ Help.DETAILS = {
 
 // -- Commands -------------------------------------------------------------------------------------
 
-Help.prototype.run = async function() {
-    const instance = this
+export async function run(options, done) {
     const cmdDir = path.join(__dirname, '../cmds/')
     const reg = new RegExp(`.${extension}$`)
-    const files = base.find(cmdDir, reg)
+    const files = await base.find(cmdDir, reg).promise()
     let filter
-    const options = this.options
     let plugins
 
     // Remove help from command list
@@ -57,7 +49,7 @@ Help.prototype.run = async function() {
 
     plugins.forEach(plugin => {
         try {
-            files.push(configs.getPluginPath(plugin))
+            files.push(configs.getPluginPath(plugin).value)
         } catch (e) {
             logger.warn(`Can't get ${plugin} plugin path.`)
         }
@@ -75,9 +67,7 @@ Help.prototype.run = async function() {
 
             let flags = []
 
-            if (cmd.default) {
-                cmd = cmd.default
-            } else {
+            if (cmd.Impl) {
                 cmd = cmd.Impl
             }
 
@@ -98,7 +88,7 @@ Help.prototype.run = async function() {
             }
 
             if (filter || options.all) {
-                flags = instance.groupOptions_(cmd.DETAILS)
+                flags = groupOptions_(cmd.DETAILS)
                 offset = 1
             }
 
@@ -116,10 +106,12 @@ Help.prototype.run = async function() {
         throw new Error(`No manual entry for ${filter}`)
     }
 
-    logger.log(this.listCommands_(commands))
+    logger.log(listCommands_(commands))
+
+    done && done()
 }
 
-Help.prototype.listFlags_ = function(command) {
+function listFlags_(command) {
     const flags = command.flags
     let content = ''
 
@@ -150,9 +142,8 @@ Help.prototype.listFlags_ = function(command) {
     return content
 }
 
-Help.prototype.listCommands_ = function(commands) {
-    let content =
-        'usage: gh <command> [payload] [--flags] [--verbose] [--no-color] [--no-hooks]\n\n'
+function listCommands_(commands) {
+    let content = 'usage: gh <command> [--flags] [--verbose] [--no-color] [--no-hooks]\n\n'
 
     content += 'List of available commands:\n'
 
@@ -166,7 +157,7 @@ Help.prototype.listCommands_ = function(commands) {
                 command.description
             }\n`
 
-            content += this.listFlags_(command)
+            content += listFlags_(command)
         }
     })
 
@@ -175,8 +166,7 @@ Help.prototype.listCommands_ = function(commands) {
     return content
 }
 
-Help.prototype.groupOptions_ = function(details) {
-    const instance = this
+function groupOptions_(details) {
     let cmd
     let options
     let shorthands
@@ -197,8 +187,8 @@ Help.prototype.groupOptions_ = function(details) {
             }
         })
 
-        cmd = instance.isCommand_(details, option)
-        type = instance.getType_(details.options[option])
+        cmd = isCommand_(details, option)
+        type = getType_(details.options[option])
 
         grouped.push({
             cmd,
@@ -211,7 +201,7 @@ Help.prototype.groupOptions_ = function(details) {
     return grouped
 }
 
-Help.prototype.getType_ = function(type) {
+function getType_(type) {
     let types
     const separator = ', '
 
@@ -226,9 +216,9 @@ Help.prototype.getType_ = function(type) {
 
         type = ''
 
-        types.forEach(function(eachType) {
-            type += this.getType_(eachType) + separator
-        }, this)
+        types.forEach(eachType => {
+            type += getType_(eachType) + separator
+        })
 
         type = type.substr(0, type.length - separator.length)
 
@@ -262,7 +252,7 @@ Help.prototype.getType_ = function(type) {
     return type
 }
 
-Help.prototype.isCommand_ = function(details, option) {
+function isCommand_(details, option) {
     if (details.commands && details.commands.indexOf(option) > -1) {
         return true
     }

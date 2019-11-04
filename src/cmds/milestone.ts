@@ -1,31 +1,17 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 // -- Requires -------------------------------------------------------------------------------------
 
-import { getGitHubInstance } from '../github'
 import * as logger from '../logger'
-
-// -- Constructor ----------------------------------------------------------------------------------
-
-export default function Milestone(options) {
-    this.options = options
-
-    if (options.organization) {
-        options.all = true
-    }
-
-    if (!options.repo && !options.all) {
-        logger.error('You must specify a Git repository with a GitHub remote to run this command')
-    }
-}
-
+import { produce } from 'immer'
 // -- Constants ------------------------------------------------------------------------------------
 
-Milestone.DETAILS = {
+export const name = 'Milestone'
+export const DETAILS = {
     alias: 'ms',
     description: 'Provides a set of util commands to work with Milestones.',
     commands: ['list'],
@@ -44,11 +30,16 @@ Milestone.DETAILS = {
 
 // -- Commands -------------------------------------------------------------------------------------
 
-Milestone.prototype.run = async function(done) {
-    const instance = this
-    const options = instance.options
+export async function run(options, done) {
+    if (options.organization) {
+        options = produce(options, draft => {
+            draft.all = true
+        })
+    }
 
-    instance.GitHub = await getGitHubInstance()
+    if (!options.repo && !options.all) {
+        logger.error('You must specify a Git repository with a GitHub remote to run this command')
+    }
 
     if (options.all) {
         logger.log(
@@ -56,7 +47,7 @@ Milestone.prototype.run = async function(done) {
         )
 
         try {
-            await instance.listFromAllRepositories()
+            await listFromAllRepositories(options)
         } catch (err) {
             throw new Error(`Can't list milestones for ${options.user}.\n${err}`)
         }
@@ -66,7 +57,7 @@ Milestone.prototype.run = async function(done) {
         logger.log(`Listing milestones on ${logger.colors.green(userRepo)}`)
 
         try {
-            await instance.list(options.user, options.repo)
+            await list(options, options.user, options.repo)
         } catch (err) {
             throw new Error(`Can't list milestones on ${userRepo}\n${err}`)
         }
@@ -75,9 +66,7 @@ Milestone.prototype.run = async function(done) {
     }
 }
 
-Milestone.prototype.list = async function(user, repo) {
-    const instance = this
-    const options = instance.options
+async function list(options, user, repo) {
     let payload
 
     payload = {
@@ -87,8 +76,8 @@ Milestone.prototype.list = async function(user, repo) {
     }
 
     try {
-        var data = await instance.GitHub.paginate(
-            instance.GitHub.issues.listMilestonesForRepo.endpoint(payload)
+        var data = await options.GitHub.paginate(
+            options.GitHub.issues.listMilestonesForRepo.endpoint(payload)
         )
     } catch (err) {
         throw new Error(logger.getErrorMessage(err))
@@ -107,10 +96,7 @@ Milestone.prototype.list = async function(user, repo) {
     }
 }
 
-Milestone.prototype.listFromAllRepositories = async function() {
-    const instance = this
-    const options = instance.options
-
+async function listFromAllRepositories(options) {
     let operation = 'listForUser'
     let payload
 
@@ -124,9 +110,9 @@ Milestone.prototype.listFromAllRepositories = async function() {
         payload.org = options.organization
     }
 
-    const data = await instance.GitHub.paginate(instance.GitHub.repos[operation].endpoint(payload))
+    const data = await options.GitHub.paginate(options.GitHub.repos[operation].endpoint(payload))
 
     for (const repo of data) {
-        await instance.list(repo.owner.login, repo.name)
+        await list(options, repo.owner.login, repo.name)
     }
 }

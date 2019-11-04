@@ -1,27 +1,21 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 // -- Requires -------------------------------------------------------------------------------------
 
 import * as configs from '../configs'
-import { getGitHubInstance, tokenExists } from '../github'
+import { tokenExists } from '../github'
 import * as logger from '../logger'
-import { hasCmdInOptions } from '../utils'
+import { userRanValidFlags } from '../utils'
 
 const testing = process.env.NODE_ENV === 'testing'
 
-// -- Constructor ----------------------------------------------------------------------------------
-
-export default function User(options) {
-    this.options = options
-}
-
 // -- Constants ------------------------------------------------------------------------------------
 
-User.DETAILS = {
+export const DETAILS = {
     alias: 'us',
     description: 'Provides the ability to login and logout if needed.',
     commands: ['login', 'logout', 'whoami'],
@@ -38,21 +32,21 @@ User.DETAILS = {
 }
 
 // -- Commands -------------------------------------------------------------------------------------
+export const name = 'User'
 
-User.prototype.run = async function(done) {
-    const instance = this
-    const options = instance.options
+export async function run(options, done) {
+    let login = options.login
 
-    if (!hasCmdInOptions(User.DETAILS.commands, options)) {
-        options.login = true
+    if (!userRanValidFlags(DETAILS.commands, options)) {
+        login = true
     }
 
-    if (options.login) {
-        if (tokenExists()) {
+    if (login) {
+        const { github_token: token, github_user: user } = configs.getConfig()
+
+        if (tokenExists({ token, user })) {
             logger.log(`You're logged in as ${logger.colors.green(options.user)}`)
         } else {
-            await getGitHubInstance()
-
             done && done()
         }
     }
@@ -60,7 +54,7 @@ User.prototype.run = async function(done) {
     if (options.logout) {
         logger.log(`Logging out of user ${logger.colors.green(options.user)}`)
 
-        !testing && User.logout()
+        !testing && logout()
     }
 
     if (options.whoami) {
@@ -70,7 +64,7 @@ User.prototype.run = async function(done) {
 
 // -- Static ---------------------------------------------------------------------------------------
 
-User.logout = function() {
+function logout() {
     configs.removeGlobalConfig('github_user')
     configs.removeGlobalConfig('github_token')
 }

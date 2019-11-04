@@ -1,6 +1,6 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -148,6 +148,10 @@ export function getConfig(key) {
 }
 
 export function getCurrentBranch() {
+    if (testing) {
+        return 'master'
+    }
+
     var git = exec.spawnSync(git_command, ['symbolic-ref', '--short', 'HEAD'])
 
     if (git.status !== 0) {

@@ -1,173 +1,270 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 // -- Requires -------------------------------------------------------------------------------------
 
+import * as Future from 'fluture'
+import { env as flutureEnv } from 'fluture-sanctuary-types'
 import * as fs from 'fs'
+import produce, { setAutoFreeze } from 'immer'
 import * as nopt from 'nopt'
 import * as path from 'path'
+import * as R from 'ramda'
+import { create, env } from 'sanctuary'
 import * as updateNotifier from 'update-notifier'
-import { find, getUser } from './base'
-import * as configs from './configs'
+
+import { getConfig, getUser } from './base'
+import { createGlobalConfig, getGlobalPackageJson, getUserHomePath } from './configs'
+import { prepend, safeReaddir, safeImport, safeRealpath, safeWhich } from './fp'
 import * as git from './git'
-import * as logger from './logger'
-
-const config = configs.getConfig()
-
-// allows to run program as js or ts
-const extension = __filename.slice(__filename.lastIndexOf('.') + 1)
+import { getGitHubInstance } from './github'
 
 const testing = process.env.NODE_ENV === 'testing'
 
+// Make Fluture Play nicely with Sanctuary
+const S = create({ checkTypes: true, env: env.concat(flutureEnv) })
+
+// Allow mutation of options when not testing
+// https://immerjs.github.io/immer/docs/freezing
+setAutoFreeze(testing)
+
+Future.debugMode(testing)
+
+interface CommandInterface {
+    name: string
+    isPlugin?: boolean
+    DETAILS: {
+        alias: string
+        description: string
+        commands: string
+        options: object
+        shorthands: object
+    }
+    run: (options?: any, done?: any) => {}
+}
+
+interface PluginInterface extends CommandInterface {
+    new (any): CommandInterface
+}
+
 // -- Utils ----------------------------------------------------------------------------------------
 
-async function resolveCmd(name, commandDir) {
-    const reg = new RegExp(`.${extension}$`, 'i')
-    const commandFiles = find(commandDir, reg)
-
-    const commandName = commandFiles.filter(file => {
-        switch (file) {
-            case `milestone.${extension}`:
-                if (name === 'ms') return true
-                break
-            case `notification.${extension}`:
-                if (name === 'nt') return true
-                break
-            case `pull-request.${extension}`:
-                if (name === 'pr') return true
-                break
-        }
-
-        if (file.startsWith(name)) {
-            return true
-        }
-
-        return false
-    })[0]
-
-    return commandName && import(path.join(commandDir, commandName))
+interface Args {
+    cooked?: string[]
+    remain?: string[]
 }
 
-async function resolvePlugin(name) {
-    // If plugin command exists, register the executed plugin name
-    process.env.NODEGH_PLUGIN = name
+/**
+ * Figure out if cmd is either the Version of Help cmd
+ */
+export function tryResolvingByHelpOrVersion({ cooked, remain }: Args = {}): Future.FutureInstance<
+    string,
+    string
+> {
+    let cmdName = null
 
-    const plugin = await configs.getPlugin(name)
-    const pluginFullName = plugin.Impl.name.toLowerCase()
+    const isVersionCmd = cooked[0] === '--version' || cooked[0] === '-v'
+    const isHelpCmd = !remain.length || cooked.includes('-h') || cooked.includes('--help')
 
-    plugin && configs.addPluginConfig(pluginFullName)
+    if (isVersionCmd) {
+        cmdName = 'version'
+    } else if (isHelpCmd) {
+        cmdName = 'help'
+    }
 
-    return plugin
+    return cmdName ? Future.of(cmdName) : Future.reject(remain[0])
 }
 
-async function loadCommand(name) {
-    let Command
-
+/**
+ * Builds out the absolute path of the non plugin cmd
+ */
+function buildFilePath(filename: string): string {
     const commandDir = path.join(__dirname, 'cmds')
-    const commandPath = path.join(commandDir, `${name}.${extension}`)
 
-    if (fs.existsSync(commandPath)) {
-        Command = await import(commandPath)
-    } else {
-        Command = await resolveCmd(name, commandDir)
-    }
+    // Allows to run program as .js normally or .ts when debugging
+    const extension = __filename.slice(__filename.lastIndexOf('.') + 1)
+    const fullFileName = filename.includes('.') ? filename : `${filename}.${extension}`
+    const absolutePath = path.join(commandDir, fullFileName)
 
-    if (!Command) {
-        // try to resolve as plugin
-        const plugin = await resolvePlugin(name)
-
-        Command = { default: plugin.Impl }
-    }
-
-    return Command.default
+    return absolutePath
 }
 
-function notifyVersion() {
-    var notifier = updateNotifier({ pkg: configs.getGlobalPackageJson() })
+type TryResolvingByPlugin = (a: string) => Future.FutureInstance<NodeJS.ErrnoException, string>
+/**
+ * Try to determine if cmd passed in is a plugin
+ */
+export const tryResolvingByPlugin: TryResolvingByPlugin = R.pipeK(
+    prepend('gh-'),
+    safeWhich,
+    safeRealpath
+)
+
+/**
+ * Checks if cmd is a valid alias
+ */
+export function tryResolvingByAlias(name: string): Future.FutureInstance<string, string> {
+    const cmdDir = path.join(__dirname, 'cmds')
+
+    return safeReaddir(cmdDir)
+        .chain(filterFiles)
+        .chainRej(() => Future.reject(name))
+
+    function filterFiles(files: string[]): Future.FutureInstance<string, string> {
+        const alias = files.filter((file: string) => {
+            return file.startsWith(name[0]) && file.includes(name[1])
+        })[0]
+
+        return alias ? Future.of(alias) : Future.reject(name)
+    }
+}
+
+// Some plugins have the Impl prop housing the main class
+// For backwards compat, we will flatten it if it exists
+function flattenIfImpl(obj) {
+    return obj.Impl ? obj.Impl : obj
+}
+
+export function loadCommand(
+    args: Args
+): Future.FutureInstance<NodeJS.ErrnoException, CommandInterface> {
+    return tryResolvingByHelpOrVersion(args)
+        .chainRej(tryResolvingByAlias)
+        .map(buildFilePath)
+        .chainRej(tryResolvingByPlugin)
+        .chain(safeImport)
+        .map(flattenIfImpl)
+}
+
+function getCommand(
+    args: string[]
+): Future.FutureInstance<{ value: string }, { value: CommandInterface }> {
+    /**
+     * nopt function returns:
+     *
+     * remain: The remaining args after all the parsing has occurred.
+     * original: The args as they originally appeared.
+     * cooked: The args after flags and shorthands are expanded.
+     */
+    const parsed = nopt(args)
+    const remain = parsed.argv.remain
+    const module = remain[0]
+
+    const Command = loadCommand(parsed.argv)
+
+    return Command.fold(() => S.Left(`Cannot find module ${module}`), S.Right)
+}
+
+function notifyVersion(): void {
+    const notifier = updateNotifier({ pkg: getGlobalPackageJson() })
 
     if (notifier.update) {
         notifier.notify()
     }
 }
 
-export async function setUp() {
-    let Command
-    let options
-    const parsed = nopt(process.argv)
-    let remain = parsed.argv.remain
-    let cooked = parsed.argv.cooked
+export async function buildOptions(args, cmdName) {
+    const options = produce(args, async draft => {
+        const config = getConfig()
 
-    let module = remain[0]
+        // Gets 2nd positional arg (`gh pr 1` will return 1)
+        const secondArg = [draft.argv.remain[1]]
+        const remote = draft.remote || config.default_remote
+        const remoteUrl = git.getRemoteUrl(remote)
+
+        if (cmdName !== 'Help' && cmdName !== 'Version') {
+            // We don't want to boot up Ocktokit if user just wants help or version
+            draft.GitHub = await getGitHubInstance()
+        }
+
+        draft.config = config
+        draft.remote = remote
+        draft.number = draft.number || secondArg
+        draft.loggedUser = getUser()
+        draft.remoteUser = git.getUserFromRemoteUrl(remoteUrl)
+        draft.repo = draft.repo || git.getRepoFromRemoteURL(remoteUrl)
+        draft.currentBranch = git.getCurrentBranch()
+        draft.github_host = config.github_host
+        draft.github_gist_host = config.github_gist_host
+
+        if (!draft.user) {
+            if (args.repo || args.all) {
+                draft.user = draft.loggedUser
+            } else {
+                draft.user = process.env.GH_USER || draft.remoteUser || draft.loggedUser
+            }
+        }
+
+        /**
+         * Checks if there are aliases in your .gh.json file.
+         * If there are aliases in your .gh.json file, we will attempt to resolve the user, PR forwarder or PR submitter to your alias.
+         */
+        if (config.alias) {
+            draft.fwd = config.alias[draft.fwd] || draft.fwd
+            draft.submit = config.alias[draft.submit] || draft.submit
+            draft.user = config.alias[draft.user] || draft.user
+        }
+    })
+
+    return options
+}
+
+/* !! IMPURE CALLING CODE !! */
+export async function run() {
+    process.env.GH_PATH = path.join(__dirname, '../')
+
+    if (!fs.existsSync(getUserHomePath())) {
+        createGlobalConfig()
+    }
 
     notifyVersion()
 
-    if (cooked[0] === '--version' || cooked[0] === '-v') {
-        module = 'version'
-    } else if (!remain.length || cooked.indexOf('-h') >= 0 || cooked.indexOf('--help') >= 0) {
-        module = 'help'
-    }
+    getCommand(process.argv).fork(
+        errMsg => console.log(errMsg),
+        async ({ value: Command }) => {
+            const args = getAvailableArgsOnCmd(Command)
+            let cmdDoneRunning = null
 
-    try {
-        Command = await loadCommand(module)
-    } catch (err) {
-        throw new Error(`Cannot find module ${module}\n${err}`)
-    }
+            if (testing) {
+                const { prepareTestFixtures } = await import('./utils')
 
-    if (!Command) {
-        throw new Error(`No cmd or plugin found.`)
-    }
+                // Enable mock apis for e2e's
+                cmdDoneRunning = prepareTestFixtures(Command.name, args.argv.cooked)
+            }
 
-    options = nopt(Command.DETAILS.options, Command.DETAILS.shorthands, process.argv, 2)
+            const options = await buildOptions(args, Command.name)
 
-    cooked = options.argv.cooked
-    remain = options.argv.remain
-
-    options.number = options.number || [remain[1]]
-    options.remote = options.remote || config.default_remote
-
-    const remoteUrl = git.getRemoteUrl(options.remote)
-
-    options.isTTY = {}
-    options.isTTY.in = Boolean(process.stdin.isTTY)
-    options.isTTY.out = Boolean(process.stdout.isTTY)
-    options.loggedUser = getUser()
-    options.remoteUser = git.getUserFromRemoteUrl(remoteUrl)
-
-    if (!options.user) {
-        if (options.repo || options.all) {
-            options.user = options.loggedUser
-        } else {
-            options.user = process.env.GH_USER || options.remoteUser || options.loggedUser
+            // Maintain backwards compat with plugins implemented as classes
+            if (typeof Command === 'function') {
+                const Plugin: PluginInterface = Command
+                await new Plugin(options).run(cmdDoneRunning)
+            } else {
+                await Command.run(options, cmdDoneRunning)
+            }
         }
-    }
-
-    options.repo = options.repo || git.getRepoFromRemoteURL(remoteUrl)
-    options.currentBranch = testing ? 'master' : git.getCurrentBranch()
-    options.github_host = config.github_host
-    options.github_gist_host = config.github_gist_host
-
-    if (testing) {
-        const { prepareTestFixtures } = await import('./utils')
-
-        await new Command(options).run(prepareTestFixtures(Command.name, cooked))
-    } else {
-        await new Command(options).run()
-    }
+    )
 }
 
-export async function run() {
-    if (!fs.existsSync(configs.getUserHomePath())) {
-        configs.createGlobalConfig()
-    }
-
-    try {
-        process.env.GH_PATH = path.join(__dirname, '../')
-
-        await setUp()
-    } catch (e) {
-        console.error(e.stack || e)
-    }
+/**
+ * If you run `gh pr 1 -s node-gh --remote=origin --user protoEvangelion`, nopt will return
+ *
+ *   {
+ *     remote: 'origin',
+ *     submit: 'node-gh',
+ *     user: 'protoEvangelion',
+ *     argv: {
+ *         original: ['pr', '1', '-s', 'pr', 'node-gh', '--remote', 'origin', '--user', 'protoEvangelion'],
+ *         remain: ['pr', '1'],
+ *         cooked: ['pr', '1', '--submit', 'node-gh', '--remote', 'origin', '--user', 'protoEvangelion'],
+ *     },
+ *   }
+ *
+ * Historically we passed every arg after 2nd arg (gh pr 1 -s user; everything after 'pr')
+ * and all parsed options to each cmd's payload function to figure out positional args and allow for neat shortcuts like:
+ * gh is 'new issue' 'new issue description'
+ */
+function getAvailableArgsOnCmd(Command: CommandInterface) {
+    return nopt(Command.DETAILS.options, Command.DETAILS.shorthands, process.argv, 2)
 }

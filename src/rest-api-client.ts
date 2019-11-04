@@ -1,6 +1,6 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -71,7 +71,20 @@ class RestApiClient {
 
         let options = this.options
 
+        // Cookie useful to help you bypass SSO like OKTA
+        // After logging into the browser with Jira, you can
+        // copy and paste your cookie into ~/.gh.json
+        // plugins": { "jira": {  "cookie": "longcookie", ...} }
+        const cookie = options.cookie
+            ? {
+                  headers: {
+                      Cookie: options.cookie,
+                  },
+              }
+            : {}
+
         let p = {
+            ...cookie,
             method,
             strictSSL: options.strictSSL,
             uri: this.url(path),

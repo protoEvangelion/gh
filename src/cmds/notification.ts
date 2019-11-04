@@ -1,30 +1,21 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 // -- Requires -------------------------------------------------------------------------------------
 
-import { getGitHubInstance } from '../github'
 import * as logger from '../logger'
-import { hasCmdInOptions } from '../utils'
+import { userRanValidFlags } from '../utils'
+import { produce } from 'immer'
 
 const printed = {}
 
-// -- Constructor ----------------------------------------------------------------------------------
-
-export default function Notifications(options) {
-    this.options = options
-
-    if (!options.repo) {
-        logger.error('You must specify a Git repository with a GitHub remote to run this command')
-    }
-}
-
 // -- Constants ------------------------------------------------------------------------------------
 
-Notifications.DETAILS = {
+export const name = 'Notifications'
+export const DETAILS = {
     alias: 'nt',
     description: 'Provides a set of util commands to work with Notifications.',
     commands: ['latest', 'watch'],
@@ -42,20 +33,19 @@ Notifications.DETAILS = {
         u: ['--user'],
         w: ['--watch'],
     },
-    payload(payload, options) {
-        options.latest = true
-    },
 }
 
 // -- Commands -------------------------------------------------------------------------------------
 
-Notifications.prototype.run = async function(done) {
-    const instance = this
-    const options = instance.options
-    instance.GitHub = await getGitHubInstance()
+export async function run(options, done) {
+    if (!options.repo) {
+        logger.error('You must specify a Git repository with a GitHub remote to run this command')
+    }
 
-    if (!hasCmdInOptions(Notifications.DETAILS.commands, options)) {
-        options.latest = true
+    if (!userRanValidFlags(DETAILS.commands, options)) {
+        options = produce(options, draft => {
+            draft.latest = true
+        })
     }
 
     if (options.latest) {
@@ -63,7 +53,7 @@ Notifications.prototype.run = async function(done) {
             `Listing activities on ${logger.colors.green(`${options.user}/${options.repo}`)}`
         )
 
-        await instance.latest(false)
+        await latest(options, false)
     }
 
     if (options.watch) {
@@ -71,15 +61,13 @@ Notifications.prototype.run = async function(done) {
             `Watching any activity on ${logger.colors.green(`${options.user}/${options.repo}`)}`
         )
 
-        await instance.watch()
+        await watch(options)
     }
 
     done && done()
 }
 
-Notifications.prototype.latest = async function(opt_watch) {
-    const instance = this
-    const options = instance.options
+async function latest(options, opt_watch) {
     let payload
     let filteredListEvents = []
 
@@ -89,15 +77,15 @@ Notifications.prototype.latest = async function(opt_watch) {
     }
 
     try {
-        var data = await instance.GitHub.paginate(
-            instance.GitHub.activity.listRepoEvents.endpoint(payload)
+        var data = await options.GitHub.paginate(
+            options.GitHub.activity.listRepoEvents.endpoint(payload)
         )
     } catch (err) {
         throw new Error(`Can't get latest notifications.\n${err}`)
     }
 
     data.forEach(event => {
-        event.txt = instance.getMessage_(event)
+        event.txt = getMessage_(event)
 
         if (opt_watch) {
             if (!printed[event.created_at]) {
@@ -128,18 +116,17 @@ Notifications.prototype.latest = async function(opt_watch) {
     }
 }
 
-Notifications.prototype.watch = async function() {
-    const instance = this
+async function watch(options) {
     const intervalTime = 3000
 
-    await instance.latest()
+    await latest(options, false)
 
     setInterval(async () => {
-        await instance.latest(true)
+        await latest(options, true)
     }, intervalTime)
 }
 
-Notifications.prototype.getMessage_ = function(event) {
+function getMessage_(event) {
     let txt = ''
     const type = event.type
     const payload = event.payload

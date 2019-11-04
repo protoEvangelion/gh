@@ -1,6 +1,6 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -9,12 +9,13 @@ import * as logger from '../logger'
 
 export default function Version() {}
 
-Version.DETAILS = {
+export const name = 'Version'
+export const DETAILS = {
     alias: 'v',
     description: 'Print gh version.',
 }
 
-Version.prototype.run = function() {
+export function run() {
     printVersion(getGlobalPackageJson())
 }
 

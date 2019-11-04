@@ -9,7 +9,15 @@
             "type": "node",
             "request": "launch",
             "runtimeArgs": ["-r", "ts-node/register"],
-            "args": ["${workspaceFolder}/src/debug.ts", "is", "test"],
+            "args": [
+                "${workspaceFolder}/src/debug.ts",
+                "pr",
+                "-s",
+                "protoEvangleion",
+                "--title",
+                "dont ask",
+                "--description"
+            ],
             // "args": ["${workspaceFolder}/src/debug.ts", "ji", "LWM-117", "--status"],
             "console": "integratedTerminal"
         },
@@ -17,9 +25,17 @@
             "name": "Testing Mode",
             "type": "node",
             "request": "launch",
-            "env": { "NODE_ENV": "testing", "GH_USER": "protoEvangelion", "GH_TOKEN": "0001" },
+            "env": {
+                "NODE_ENV": "testing",
+                "GH_USER": "protoEvangelion",
+                "GH_TOKEN": "0001",
+                "GENERATE_NEW_TOKEN": "true"
+            },
+            "osx": {
+                "DEBUG": "nock.*"
+            },
             "runtimeArgs": ["-r", "ts-node/register"],
-            "args": ["${workspaceFolder}/src/debug.ts", "pr", "--prettyPrint"],
+            "args": ["${workspaceFolder}/src/debug.ts", "--help"],
             "console": "integratedTerminal"
         }
     ]

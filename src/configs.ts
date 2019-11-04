@@ -1,20 +1,53 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 import * as fs from 'fs'
 import { cloneDeep } from 'lodash'
 import * as path from 'path'
+import * as R from 'ramda'
+import * as S from 'sanctuary'
+import * as $ from 'sanctuary-def'
 import * as userhome from 'userhome'
 import * as which from 'which'
 import * as exec from './exec'
 import * as logger from './logger'
+import { safeImport } from './fp'
 
 export const PLUGINS_PATH_KEY = 'plugins_path'
 
 const testing = process.env.NODE_ENV === 'testing'
+
+/* Refactored FP Functions */
+
+const safeWhich = S.encase(which.sync)
+const safeRealpath = S.encase(fs.realpathSync)
+
+export const getPluginPath = R.pipeK(
+    safeWhich,
+    safeRealpath
+)
+
+// TODO merge with getPlugin fn in cmd.ts
+export const getPlugin = R.pipeK(
+    S.prepend('gh-'),
+    getPluginPath,
+    safeImport
+)
+
+/* ----------------------- */
+
+// function concatError(leftMonad, errorMessage) {
+//     const leftMonadContainsError = leftMonad && leftMonad.isLeft() && leftMonad.value
+
+//     return leftMonadContainsError ? leftMonad.map(mapError) : Left(errorMessage)
+
+//     function mapError(prevErrorMessage) {
+//         return `${prevErrorMessage}\n${errorMessage}`
+//     }
+// }
 
 // -- Config -------------------------------------------------------------------
 
@@ -81,7 +114,7 @@ export function getConfig() {
     const is_enterprise = config.api.host !== 'api.github.com'
 
     if (config.github_host === undefined) {
-        config.github_host = `${protocol}${is_enterprise ? config.api.host : 'api.github.com'}`
+        config.github_host = `${protocol}${is_enterprise ? config.api.host : 'github.com'}`
     }
     if (config.github_gist_host === undefined) {
         config.github_gist_host = `${protocol}${
@@ -168,6 +201,12 @@ export function writeGlobalConfigCredentials(user, token, path): void {
 
 export function addPluginConfig(plugin) {
     try {
+        const pluginName = S.gets(S.is($.String))(['Impl', 'namez'])(plugin)
+
+        if (S.isNothing(pluginName)) {
+            return S.Left('Cannot get plugin name')
+        }
+
         const pluginConfig = require(path.join(
             getNodeModulesGlobalPath(),
             `gh-${plugin}`,
@@ -213,10 +252,10 @@ export function addPluginConfig(plugin) {
             }
         }
     } catch (e) {
-        if (e.code !== 'MODULE_NOT_FOUND') {
-            throw e
-        }
+        return S.Left(`Error adding config\n${e}`)
     }
+
+    return S.Right('Success')
 }
 
 export function getPlugins() {
@@ -237,34 +276,6 @@ export function getPlugins() {
     return plugins
 }
 
-export function getPlugin(pluginName) {
-    pluginName = getPluginBasename(pluginName)
-
-    return import(getPluginPath(`gh-${pluginName}`))
-}
-
 export function pluginHasConfig(pluginName) {
     return Boolean(getConfig().plugins[pluginName])
-}
-
-export function getPluginPath(plugin) {
-    try {
-        var location = which.sync(plugin)
-    } catch (err) {
-        throw new Error(`Cannot resolve plugin path\n${err}`)
-    }
-
-    return fs.realpathSync(location)
-}
-
-export function getPluginBasename(plugin) {
-    return plugin && plugin.replace('gh-', '')
-}
-
-export function isPluginIgnored(plugin) {
-    if (getConfig().ignored_plugins.indexOf(getPluginBasename(plugin)) > -1) {
-        return true
-    }
-
-    return false
 }

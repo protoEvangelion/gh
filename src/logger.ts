@@ -1,6 +1,6 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -10,6 +10,7 @@ import * as handlebars from 'handlebars'
 import * as moment from 'moment'
 import * as path from 'path'
 import * as wordwrap from 'wordwrap'
+import * as S from 'sanctuary'
 
 const testing = process.env.NODE_ENV === 'testing'
 
@@ -46,6 +47,16 @@ export function insane(...args) {
 
     console.log(...args)
 }
+
+export const exitWithError = S.curry2((message, stack) => {
+    if (process.env.GH_VERBOSE || process.env.GH_VERBOSE_INSANE) {
+        console.error(`${message}\n${stack}`)
+    } else {
+        console.error(message)
+    }
+
+    process.exit(1)
+})
 
 export function error(...args) {
     if (typeof args[0] === 'string') {

@@ -1,6 +1,6 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -23,6 +23,11 @@ describe('E2E: Pull Request Module Test', () => {
     it('List Detailed PRs `gh pr --detailed --prettyPrint`', done => {
         // strip ansi characters so it doesn't fail on Travis
         expect(stripAnsi(runCmd('gh pr --detailed --prettyPrint'))).toMatchSnapshot()
+        done()
+    })
+
+    it('Open pr in browser `gh pr 55 --browser`', done => {
+        expect(runCmd('gh pr 55 --browser')).toMatchSnapshot()
         done()
     })
 
@@ -78,6 +83,13 @@ describe('E2E: Pull Request Module Test', () => {
     it('Submit PR `gh pr -s protoEvangelion -b master -t "pr title" -D "pr description"`', done => {
         expect(
             runCmd('gh pr -s protoEvangelion -b master -t "pr title" -D "pr description"')
+        ).toMatchSnapshot()
+        done()
+    })
+
+    it('Submit PR as a draft `gh pr -s protoEvangelion --draft=true -b master -t "pr title" -D "description"`', done => {
+        expect(
+            runCmd('gh pr -s protoEvangelion --draft=true -b master -t "pr title" -D "description"')
         ).toMatchSnapshot()
         done()
     })

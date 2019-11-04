@@ -1,12 +1,82 @@
 /**
  * © 2013 Liferay, Inc. <https://liferay.com> and Node GH contributors
- * (see file: CONTRIBUTORS)
+ * (see file: README.md)
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 import { isArray, isObject, isPlainObject, map, mapValues, upperFirst } from 'lodash'
 import * as nock from 'nock'
 import * as zlib from 'zlib'
+import * as open from 'opn'
+import { spawnSync, execSyncInteractiveStream } from './exec'
+import { readFileSync, writeFileSync, unlinkSync } from 'fs'
+import * as logger from './logger'
+
+const testing = process.env.NODE_ENV === 'testing'
+
+/**
+ * Opens url in browser
+ */
+export function openUrl(url) {
+    testing ? console.log(url) : open(url, { wait: false })
+}
+
+/**
+ * Checks if string has been merged with a common flag or is empty
+ */
+export function userLeftMsgEmpty(string: string): boolean {
+    return (
+        !string ||
+        string === '--title' ||
+        string === '-t' ||
+        string === '--message' ||
+        string === '-m' ||
+        string === '--comment' ||
+        string === '-c' ||
+        string === '--description' ||
+        string === '-D'
+    )
+}
+
+/**
+ * Allows users to add text from their editor of choice rather than the terminal
+ *
+ * @example
+ *   openFileInEditor('temp-gh-issue-title.txt', '# Add a pr title msg on the next line')
+ */
+export function openFileInEditor(fileName: string, msg: string): string {
+    try {
+        const filePath = `${__dirname}/${fileName}`
+
+        writeFileSync(filePath, msg)
+
+        const editor = spawnSync('git', ['config', '--global', 'core.editor']).stdout
+
+        execSyncInteractiveStream(`${editor} "${filePath}"`)
+
+        const newFileContents = readFileSync(filePath).toString()
+
+        const commentMark = fileName.endsWith('.md') ? '<!--' : '#'
+
+        unlinkSync(filePath)
+
+        return cleanFileContents(newFileContents, commentMark)
+    } catch (err) {
+        logger.error('Could not use your editor to store a custom message\n', err)
+    }
+}
+
+/**
+ * Removes # comments and trims new lines
+ * @param {string} commentMark - refers to the comment mark which is different for each file
+ */
+export function cleanFileContents(fileContents: string, commentMark = '#'): string {
+    return fileContents
+        .split('\n')
+        .filter(line => !line.startsWith(commentMark))
+        .join('\n')
+        .trim()
+}
 
 export function getCurrentFolderName(): string {
     const cwdArr = process
@@ -17,7 +87,10 @@ export function getCurrentFolderName(): string {
     return cwdArr[cwdArr.length - 1]
 }
 
-export function hasCmdInOptions(commands, options) {
+/**
+ * Checks to see if the cli arguments are one of the accepted flags
+ */
+export function userRanValidFlags(commands, options) {
     if (commands) {
         return commands.some(c => {
             return options[c] !== undefined
@@ -35,6 +108,10 @@ export function prepareTestFixtures(cmdName, argv) {
     // These should only include the flags that you need for e2e tests
     const cmds = [
         {
+            name: 'Help',
+            flags: [],
+        },
+        {
             name: 'Issue',
             flags: ['--comment', '--new', '--open', '--close', '--search', '--assign'],
         },
@@ -48,6 +125,7 @@ export function prepareTestFixtures(cmdName, argv) {
                 '--comment',
                 '--open',
                 '--close',
+                '--draft',
                 '--submit',
             ],
         },
@@ -64,7 +142,7 @@ export function prepareTestFixtures(cmdName, argv) {
         },
         {
             name: 'Repo',
-            flags: ['--label', '--list', '--new', '--fork', '--delete'],
+            flags: ['--label', '--list', '--new', '--fork', '--delete', '--search'],
         },
         {
             name: 'User',
