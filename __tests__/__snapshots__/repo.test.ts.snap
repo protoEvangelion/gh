@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`E2E: Repo Module Test Create new repo \`gh re --new foo --init\` 1`] = `
+"Creating a new repo on protoEvangelion/foo
+https://github.com/protoEvangelion/foo
+[hook] gh re --browser  --user protoEvangelion --repo foo
+"
+`;
+
+exports[`E2E: Repo Module Test Delete repo \`gh re --delete foo\` 1`] = `
+"Deleting repo protoEvangelion/foo
+? Are you sure? This action CANNOT be undone. [y/N] ? Are you sure? This action CANNOT be undone. [y/N] y? Are you sure? This action CANNOT be undone. [y/N] y
+✓ Successfully deleted repo.
+"
+`;
+
+exports[`E2E: Repo Module Test Fork a repo \`gh re --fork prettier --user prettier\` 1`] = `
+"Forking repo prettier/prettier into protoEvangelion/prettier
+Successfully forked: https://github.com/protoEvangelion/prettier
+"
+`;
+
+exports[`E2E: Repo Module Test List Repos \`gh re --browser\` 1`] = `
+"https://github.com/protoEvangelion/gh
+"
+`;
+
+exports[`E2E: Repo Module Test List Repos \`gh re --list\` 1`] = `
+"protoEvangelion/100-days-of-code
+protoEvangelion/adopt-a-family
+protoEvangelion/alloy-ui
+"
+`;
+
+exports[`E2E: Repo Module Test List labels on a repo \`gh re --label --list --repo gh\` 1`] = `
+"Listing labels on protoEvangelion/gh
+--user
+duplicate
+enhancement
+"
+`;
+
+exports[`E2E: Repo Module Test Search repositories from GitHub org showing detailed results. \`gh re --detailed --search octocat org:github\` 1`] = `
+"Searching for repos using the criteria: octocat org:github
+github/octocatalog-diff
+https://github.com/github/octocatalog-diff
+Compile Puppet catalogs from 2 branches, versions, etc., and compare them
+https://rubygems.org/gems/octocatalog-diff/
+last update in 4 years
+"
+`;

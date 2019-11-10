@@ -1,8 +1,9 @@
 {
+    "version": "1.11.4",
+
     "api": {
         "host": "api.github.com",
-        "protocol": "https",
-        "version": "3.0.0"
+        "protocol": "https"
     },
 
     "default_branch": "master",
@@ -17,6 +18,10 @@
 
     "github_user": "",
 
+    "use_editor": true,
+
+    "page_size": 30,
+
     "hooks": {
         "issue": {
             "close": {
@@ -26,7 +31,7 @@
             "new": {
                 "before": [],
                 "after": [
-                    "gh is --browser --user {{options.user}} --repo {{options.repo}} --number {{options.number}}"
+                    "gh is --browser {{options.browser}} --user {{options.user}} --repo {{options.repo}} --number {{options.number}}"
                 ]
             },
             "open": {
@@ -53,12 +58,6 @@
                     "gh pr {{options.number}} --close"
                 ]
             },
-            "merge": {
-                "before": [],
-                "after": [
-                    "gh pr {{options.number}} --user {{options.user}} --repo {{options.repo}} --comment 'Thank you, pull request merged!{{#if options.changes}} [See changes here.]({{compareLink}}){{/if}}'"
-                ]
-            },
             "open": {
                 "before": [],
                 "after": []
@@ -66,9 +65,7 @@
             "submit": {
                 "before": [],
                 "after": [
-                    "{{#if options.number}}gh pr {{options.number}} --user {{options.user}} --repo {{options.repo}} --comment 'Pull request submitted to {{submittedLink}}.{{#if options.changes}} [See changes here.]({{compareLink}}){{/if}}'{{/if}}",
-                    "gh pr --browser --user {{options.submit}} --repo {{options.repo}} --number {{options.submittedPull}}",
-                    "{{#if options.number}}gh pr --user {{options.user}} --repo {{options.repo}} {{options.number}} --close{{/if}}"
+                    "gh pr --browser {{options.browser}} --user {{options.submit}} --repo {{options.repo}} --number {{options.submittedPull}}"
                 ]
             }
         },
@@ -84,7 +81,7 @@
             "new": {
                 "before": [],
                 "after": [
-                    "gh re --browser --user {{options.loggedUser}} --repo {{options.new}}"
+                    "gh re --browser {{options.browser}} --user {{options.user}} --repo {{options.new}}"
                 ]
             }
         },
@@ -95,15 +92,11 @@
             },
             "fork": {
                 "before": [],
-                "after": [
-                    "gh gi --browser --id {{options.id}}"
-                ]
+                "after": ["gh gi --browser {{options.browser}} --id {{options.id}}"]
             },
             "new": {
                 "before": [],
-                "after": [
-                    "gh gi --browser --id {{options.id}}"
-                ]
+                "after": ["gh gi --browser {{options.browser}} --id {{options.id}}"]
             }
         }
     },
@@ -114,9 +107,15 @@
 
     "plugins": {},
 
-    "prefix": "gh",
+    "pretty_print": true,
 
     "replace": {},
 
-    "signature": " <br><br>:octocat: *Sent from [GH](http://nodegh.io).*"
+    "ssh": true,
+
+    "signature": "",
+
+    "alias": {
+        "zeno": "zenorocha"
+    }
 }

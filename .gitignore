@@ -1,3 +1,11 @@
+reports
 node_modules
 npm-debug.log
 .DS_Store
+coverage
+# flame graphs dir
+flame
+.env
+lib
+.vscode
+!.vscode/launch.json
