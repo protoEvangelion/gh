@@ -6,6 +6,7 @@
 
 import * as stripAnsi from 'strip-ansi'
 import { runCmd } from '../src/test-utils'
+import { separatePullsByBranches } from '../src/cmds/pull-request/list'
 
 describe('E2E: Pull Request Module Test', () => {
     it('List PRs `gh pr`', done => {
@@ -92,5 +93,53 @@ describe('E2E: Pull Request Module Test', () => {
             runCmd('gh pr -s protoEvangelion --draft=true -b master -t "pr title" -D "description"')
         ).toMatchSnapshot()
         done()
+    })
+})
+
+describe('Pull Request Helpers', () => {
+    it('separatePullsByBranches', () => {
+        const options = {
+            branch: 'master',
+        }
+
+        const pulls = [
+            {
+                base: { ref: 'master' },
+                title: 'Super awesome PR',
+            },
+            {
+                base: { ref: 'master' },
+                title: 'Test PR module',
+            },
+            {
+                base: { ref: '2.0.x' },
+                title: 'Test PR module',
+            },
+        ]
+
+        expect(separatePullsByBranches(options, pulls)).toMatchInlineSnapshot(`
+            Object {
+              "branches": Array [
+                Object {
+                  "name": "master",
+                  "pulls": Array [
+                    Object {
+                      "base": Object {
+                        "ref": "master",
+                      },
+                      "title": "Super awesome PR",
+                    },
+                    Object {
+                      "base": Object {
+                        "ref": "master",
+                      },
+                      "title": "Test PR module",
+                    },
+                  ],
+                  "total": 2,
+                },
+              ],
+            }
+        `)
     })
 })

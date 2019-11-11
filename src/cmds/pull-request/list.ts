@@ -95,8 +95,8 @@ async function list(options) {
 
     const { data, hasNextPage } = await handlePagination({
         options,
-        listEndpoint: options.GitHub.pulls.list,
         payload,
+        listEndpoint: options.GitHub.pulls.list,
     })
 
     let pulls = data
@@ -133,7 +133,7 @@ async function list(options) {
         })
     )
 
-    const json = getPullsTemplateJson_(options, pulls)
+    const json = separatePullsByBranches(options, pulls)
 
     const currentUserRepo = logger.colors.yellow(`${user}/${repo}`)
 
@@ -254,7 +254,7 @@ function filterPullsSentByMe_(options, pulls) {
     })
 }
 
-function getPullsTemplateJson_(options, pulls) {
+export function separatePullsByBranches(options, pulls) {
     let branch
 
     const branches = {}
