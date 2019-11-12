@@ -93,7 +93,7 @@ async function list(options) {
         per_page: pageSize,
     }
 
-    const { data, hasNextPage } = await handlePagination({
+    const { data, hasNextPage } = await handlePagination<Octokit.PullsListResponse>({
         options,
         payload,
         listEndpoint: options.GitHub.pulls.list,

@@ -13,7 +13,11 @@ import * as inquirer from 'inquirer'
 
 const testing = process.env.NODE_ENV === 'testing'
 
-export async function handlePagination({ options, listEndpoint, payload }) {
+export async function handlePagination<T>({
+    options,
+    listEndpoint,
+    payload,
+}): Promise<{ hasNextPage: boolean; data: T }> {
     let hasNextPage = false
 
     try {
