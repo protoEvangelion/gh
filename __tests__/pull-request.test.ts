@@ -21,24 +21,12 @@ describe('E2E: Pull Request Module Test', () => {
         done()
     })
 
-    it('List Detailed PRs `gh pr --detailed --prettyPrint`', done => {
-        // strip ansi characters so it doesn't fail on Travis
-        expect(stripAnsi(runCmd('gh pr --detailed --prettyPrint'))).toMatchSnapshot()
-        done()
-    })
-
     it('Open pr in browser `gh pr 55 --browser`', done => {
         expect(runCmd('gh pr 55 --browser')).toMatchSnapshot()
         done()
     })
 
     /* These have been passing locally but failing in Travis, need to find out work around */
-    xit('List PRs `gh pr --list --prettyPrint`', done => {
-        // strip ansi characters so it doesn't fail on Travis
-        expect(stripAnsi(runCmd('gh pr --list --prettyPrint'))).toMatchSnapshot()
-        done()
-    })
-
     xit('List PRs & sorty by complexity `gh pr --list --sort complexity`', done => {
         // strip ansi characters so it doesn't fail on Travis
         expect(stripAnsi(runCmd('gh pr --list --sort complexity'))).toMatchSnapshot()
@@ -98,10 +86,6 @@ describe('E2E: Pull Request Module Test', () => {
 
 describe('Pull Request Helpers', () => {
     it('separatePullsByBranches', () => {
-        const options = {
-            branch: 'master',
-        }
-
         const pulls = [
             {
                 base: { ref: 'master' },
@@ -112,31 +96,27 @@ describe('Pull Request Helpers', () => {
                 title: 'Test PR module',
             },
             {
-                base: { ref: '2.0.x' },
-                title: 'Test PR module',
+                base: { ref: 'v2' },
+                title: 'Next Version',
             },
         ]
 
-        expect(separatePullsByBranches(options, pulls)).toMatchInlineSnapshot(`
+        expect(separatePullsByBranches(pulls)).toHaveProperty('v2')
+
+        expect(separatePullsByBranches(pulls, 'master')).toMatchInlineSnapshot(`
             Object {
-              "branches": Array [
+              "master": Array [
                 Object {
-                  "name": "master",
-                  "pulls": Array [
-                    Object {
-                      "base": Object {
-                        "ref": "master",
-                      },
-                      "title": "Super awesome PR",
-                    },
-                    Object {
-                      "base": Object {
-                        "ref": "master",
-                      },
-                      "title": "Test PR module",
-                    },
-                  ],
-                  "total": 2,
+                  "base": Object {
+                    "ref": "master",
+                  },
+                  "title": "Super awesome PR",
+                },
+                Object {
+                  "base": Object {
+                    "ref": "master",
+                  },
+                  "title": "Test PR module",
                 },
               ],
             }

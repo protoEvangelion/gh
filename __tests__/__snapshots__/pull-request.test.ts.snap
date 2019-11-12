@@ -40,26 +40,6 @@ exports[`E2E: Pull Request Module Test Get PR Info \`gh pr --info 50\` 1`] = `
 "
 `;
 
-exports[`E2E: Pull Request Module Test List Detailed PRs \`gh pr --detailed --prettyPrint\` 1`] = `
-"Listing open pull requests on protoEvangelion/gh
-protoEvangelion/gh
-Branch: master (1)
-┌─────────┬───────────────────────────────────────────────┬─────────────────────┬───────────────┬────────┐
-│    #    │ Details                                       │ Author              │ Opened        │ Status │
-├─────────┼───────────────────────────────────────────────┼─────────────────────┼───────────────┼────────┤
-│   #55   │ Title:                                        │ @protoEvangelion    │ in 4 years    │   ✓    │
-│         │                                               │                     │               │        │
-│         │ pr title                                      │                     │               │        │
-│         │                                               │                     │               │        │
-│         │ Body:                                         │                     │               │        │
-│         │                                               │                     │               │        │
-│         │ pr description                                │                     │               │        │
-│         │                                               │                     │               │        │
-│         │ https://github.com/protoEvangelion/gh/pull/55 │                     │               │        │
-└─────────┴───────────────────────────────────────────────┴─────────────────────┴───────────────┴────────┘
-"
-`;
-
 exports[`E2E: Pull Request Module Test List Detailed PRs \`gh pr --detailed\` 1`] = `
 "Listing open pull requests on protoEvangelion/gh
 protoEvangelion/gh
@@ -88,25 +68,6 @@ Branch: master (1)
 
 Branch: octokit (1)
 #98 pr title2 @protoEvangelion (in 5 years)
-"
-`;
-
-exports[`E2E: Pull Request Module Test List PRs \`gh pr --list --prettyPrint\` 1`] = `
-"Listing open pull requests on protoEvangelion/gh
-protoEvangelion/gh
-Branch: octokit (1)
-┌─────────┬───────────────────────────────────────────────┬─────────────────────┬───────────────┬────────┐
-│    #    │ Title                                         │ Author              │ Opened        │ Status │
-├─────────┼───────────────────────────────────────────────┼─────────────────────┼───────────────┼────────┤
-│   #98   │ pr title2                                     │ @protoEvangelion    │ in 5 years    │   -    │
-└─────────┴───────────────────────────────────────────────┴─────────────────────┴───────────────┴────────┘
-
-Branch: master (1)
-┌─────────┬───────────────────────────────────────────────┬─────────────────────┬───────────────┬────────┐
-│    #    │ Title                                         │ Author              │ Opened        │ Status │
-├─────────┼───────────────────────────────────────────────┼─────────────────────┼───────────────┼────────┤
-│   #50   │ pr2                                           │ @protoEvangelion    │ in 5 years    │   ✓    │
-└─────────┴───────────────────────────────────────────────┴─────────────────────┴───────────────┴────────┘
 "
 `;
 
