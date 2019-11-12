@@ -107,7 +107,7 @@ async function list(options) {
 
     if (sortType && sortType === SORT_COMPLEXITY) {
         try {
-            pulls = await addComplexityParamToPulls_(options, pulls)
+            pulls = await addLevelOfPullComplexity(options, pulls)
         } catch (err) {
             throw new Error(`Error sorting by complexity\n${err}`)
         }
@@ -115,25 +115,7 @@ async function list(options) {
         pulls = sortPullsByComplexity_(pulls, options.direction)
     }
 
-    pulls = await Promise.all(
-        pulls.map(async function mapStatus(pull) {
-            const statusPayload = {
-                repo,
-                owner: user,
-                ref: pull.head.sha,
-            }
-
-            try {
-                var { data } = await options.GitHub.repos.getCombinedStatusForRef(statusPayload)
-            } catch (err) {
-                throw new Error(`Error getting combined status for ref\n${err}`)
-            }
-
-            return { ...pull, combinedStatus: data.state }
-        })
-    )
-
-    const json = separatePullsByBranches(options, pulls)
+    pulls = await addPullStatus(options, pulls)
 
     const currentUserRepo = logger.colors.yellow(`${user}/${repo}`)
 
@@ -201,7 +183,27 @@ async function listFromAllRepositories(options) {
     }
 }
 
-async function addComplexityParamToPulls_(options, pulls) {
+function addPullStatus(options, pulls): Promise<Octokit.PullsListResponse> {
+    return Promise.all(
+        pulls.map(async function mapStatus(pull) {
+            const statusPayload = {
+                repo: options.repo,
+                owner: options.user,
+                ref: pull.head.sha,
+            }
+
+            try {
+                var { data } = await options.GitHub.repos.getCombinedStatusForRef(statusPayload)
+            } catch (err) {
+                throw new Error(`Error getting combined status for ref\n${err}`)
+            }
+
+            return { ...pull, combinedStatus: data.state }
+        })
+    )
+}
+
+async function addLevelOfPullComplexity(options, pulls): Promise<Octokit.PullsListResponse> {
     return Promise.all(
         pulls.map(async pull => {
             options = produce(options, draft => {
