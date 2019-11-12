@@ -10,7 +10,11 @@ import * as ora from 'ora'
 import * as marked from 'marked'
 import * as TerminalRenderer from 'marked-terminal'
 import * as wrap from 'wordwrap'
+import * as S from 'sanctuary'
+import * as R from 'ramda'
+import * as Octokit from '@octokit/rest'
 
+import { isString } from '../../fp'
 import * as logger from '../../logger'
 import { afterHooks, beforeHooks } from '../../hooks'
 import { askUserToPaginate, handlePagination } from '../../utils'
@@ -124,24 +128,26 @@ async function list(options) {
     if (pulls.length) {
         logger.log(currentUserRepo)
 
-        json.branches.forEach((branch, index, arr) => {
-            logger.log(`${logger.colors.blue('Branch:')} ${branch.name} (${branch.total})`)
+        const pullsByBranches = Object.entries(separatePullsByBranches(pulls, options.branch))
+
+        pullsByBranches.forEach(([branchName, prs], index, arr) => {
+            logger.log(`${logger.colors.blue('Branch:')} ${branchName} (${prs.length})`)
 
             const printTableView = config.pretty_print === undefined || Boolean(config.pretty_print)
 
             if (printTableView) {
-                printPullsInfoTable_(options, branch.pulls)
+                printPullsInfoTable_(options, prs)
             } else {
-                branch.pulls.forEach(pull => printPullInfo(options, pull))
+                prs.forEach(pull => printPullInfo(options, pull))
             }
 
             if (index !== arr.length - 1) {
-                logger.log('')
+                logger.log('\n')
             }
         })
 
         if (options.all) {
-            logger.log('')
+            logger.log('\n')
         }
     }
 
@@ -256,32 +262,32 @@ function filterPullsSentByMe_(options, pulls) {
     })
 }
 
-export function separatePullsByBranches(options, pulls) {
-    let branch
+interface Branches {
+    [x: string]: Octokit.PullsListResponse
+}
+export function separatePullsByBranches(
+    pulls: Octokit.PullsListResponse,
+    branchName?: string
+): Branches {
+    return R.reduce(
+        (branches, pull) => {
+            const pullBranchNameMaybe = S.gets(isString)(['base', 'ref'])(pull)
 
-    const branches = {}
-    const json = {
-        branches: [],
-    }
+            return R.ifElse(
+                () => R.and(branchName, R.not(R.equals(pullBranchNameMaybe, S.Just(branchName)))),
+                () => branches,
+                function graftPullIntoBranch() {
+                    return S.maybe({})(pullBranchName => {
+                        const pullsOnBranch = branches[pullBranchName] || []
 
-    pulls.forEach(pull => {
-        branch = pull.base.ref
-
-        if (!options.branch || options.branch === branch) {
-            branches[branch] = branches[branch] || []
-            branches[branch].push(pull)
-        }
-    })
-
-    Object.keys(branches).forEach(branch => {
-        json.branches.push({
-            name: branch,
-            pulls: branches[branch],
-            total: branches[branch].length,
-        })
-    })
-
-    return json
+                        return { ...branches, [pullBranchName]: [...pullsOnBranch, pull] }
+                    })(pullBranchNameMaybe)
+                }
+            )()
+        },
+        {},
+        pulls
+    )
 }
 
 function printPullsInfoTable_(options, pulls) {

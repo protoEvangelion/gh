@@ -52,6 +52,7 @@ export const prepend = (a: string) => (b: string) => {
 
 /* TYPE CHECKING UTILS */
 export const isObject = S.is($.Object)
+export const isString = S.is($.String)
 
 /* LOGGING UTILS */
 export const l = x => {
