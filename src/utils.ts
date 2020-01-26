@@ -10,35 +10,33 @@ import { spawnSync, execSyncInteractiveStream } from './exec'
 import { readFileSync, writeFileSync } from 'fs'
 import * as logger from './logger'
 import * as inquirer from 'inquirer'
+import * as R from 'ramda'
 
 const testing = process.env.NODE_ENV === 'testing'
 
-export async function handlePagination({ options, listEndpoint, payload }) {
-    let hasNextPage = false
+export const fetch = ({ options, path, paginate = false, payload }) => {
+    const endpoint = R.path(path.split('.'), R.prop('GitHub', options))
 
-    try {
-        // If no pageSize, assume user removed limit and fetch all prs
-        var data = await (options.allPages
-            ? options.GitHub.paginate(listEndpoint.endpoint.merge(payload))
-            : listEndpoint(payload))
+    return paginate
+        ? handlePagination({ options, listEndpoint: endpoint, payload })
+        : endpoint(payload)
+}
 
-        hasNextPage = data.headers && data.headers.link && data.headers.link.includes('rel="next"')
+const hasNextPage = res =>
+    R.pathSatisfies(x => x && x.includes('rel="next"'), ['headers', 'link'], res)
 
-        data = data.data || data
-    } catch (err) {
-        if (err && err.status === '404') {
-            // Some times a repo is found, but you can't list its prs
-            // Due to the repo being disabled (e.g., private repo with debt)
-            logger.warn(`Can't list pull requests for ${options.user}/${options.repo}`)
-        } else {
-            throw new Error(`Error listing data\n${err}`)
-        }
-    }
-
-    return {
-        data,
-        hasNextPage,
-    }
+export function handlePagination({
+    options,
+    listEndpoint,
+    payload,
+}): Promise<{ data: object[]; hasNextPage: boolean }> {
+    return (options.allPages
+        ? options.GitHub.paginate(listEndpoint.endpoint.merge(payload))
+        : listEndpoint({ ...payload, per_page: options.pageSize })
+    ).then(data => ({
+        hasNextPage: hasNextPage(data),
+        data: R.defaultTo(data, data.data),
+    }))
 }
 
 /**

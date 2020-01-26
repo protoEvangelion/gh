@@ -9,9 +9,10 @@
             "type": "node",
             "request": "launch",
             "runtimeArgs": ["-r", "ts-node/register"],
-            "args": ["${workspaceFolder}/src/debug.ts", "is", "--new"],
+            "args": ["${workspaceFolder}/src/debug.ts", "pr"],
             // "args": ["${workspaceFolder}/src/debug.ts", "ji", "LWM-117", "--status"],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "runtimeExecutable": "~/.nodebrew/current/bin/node"
         },
         {
             "name": "Testing Mode",
