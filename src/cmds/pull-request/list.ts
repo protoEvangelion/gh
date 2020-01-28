@@ -10,6 +10,9 @@ import * as ora from 'ora'
 import * as marked from 'marked'
 import * as TerminalRenderer from 'marked-terminal'
 import * as wrap from 'wordwrap'
+import { initInteractive } from './interactive'
+import * as R from 'ramda'
+import * as M from 'monet'
 
 import * as logger from '../../logger'
 import { afterHooks, beforeHooks } from '../../hooks'
@@ -23,7 +26,19 @@ const SORT_CREATED = 'created'
 
 const spinner = ora({ text: 'Fetching Pull Requests', discardStdin: false })
 
+/*
+ - before hook
+ - shape options
+ - map options to payload
+ - make list request
+ - format for printing
+ - printing
+*/
 export async function listHandler(options) {
+    initInteractive(options)
+
+    return
+
     await beforeHooks('pull-request.list', { options })
 
     let who
@@ -34,11 +49,7 @@ export async function listHandler(options) {
     })
 
     if (options.all) {
-        who = options.user
-
-        if (options.org) {
-            who = options.org
-        }
+        who = options.org || options.user
 
         logger.log(`Listing all ${options.state} pull requests for ${logger.colors.green(who)}`)
 
@@ -75,9 +86,9 @@ export async function listHandler(options) {
 async function list(options) {
     spinner.start()
 
-    const { user, repo, page = 1, pageSize, config } = options
+    const { user, repo, page = 1, pageSize, sort, config } = options
 
-    let sortType = options.sort
+    let sortType = sort
 
     if (sortType === SORT_COMPLEXITY) {
         sortType = SORT_CREATED
@@ -105,7 +116,7 @@ async function list(options) {
         pulls = filterPullsSentByMe_(options, pulls)
     }
 
-    if (sortType && sortType === SORT_COMPLEXITY) {
+    if (sort && sort === SORT_COMPLEXITY) {
         try {
             pulls = await addComplexityParamToPulls_(options, pulls)
         } catch (err) {
@@ -126,7 +137,7 @@ async function list(options) {
             try {
                 var { data } = await options.GitHub.repos.getCombinedStatusForRef(statusPayload)
             } catch (err) {
-                throw new Error(`Error getting combined status for ref\n${err}`)
+                throw new Error(`Error getting PR status\n${err}`)
             }
 
             return { ...pull, combinedStatus: data.state }

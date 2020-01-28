@@ -7,9 +7,10 @@
         "outDir": "lib",
         "rootDir": "src",
         "lib": ["es2017"],
-        "sourceMap": true
+        "sourceMap": true,
+        "jsx": "react"
     },
     "typeRoots": ["node_modules", "node_modules/@types", "definitions"],
-    "include": ["src/**/*.ts", "src/*.ts"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/*.ts"],
     "exclude": ["node_modules", "lib", "__tests__", "__mocks__"]
 }

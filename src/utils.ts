@@ -14,22 +14,26 @@ import * as R from 'ramda'
 
 const testing = process.env.NODE_ENV === 'testing'
 
-export const fetch = ({ options, path, paginate = false, payload }) => {
-    const endpoint = R.path(path.split('.'), R.prop('GitHub', options))
+// interface GithubResponse {
+//     data: object
+//     hasNextPage: boolean
+// }
 
-    return paginate
-        ? handlePagination({ options, listEndpoint: endpoint, payload })
-        : endpoint(payload)
+// export function fetch({ options, path, paginate = false, payload }): Promise<GithubResponse> {
+//     const endpoint = R.path(path.split('.'), R.prop('GitHub', options))
+
+//     return M.Either.fromPromise<GithubResponse>(
+//         paginate
+//             ? handlePagination({ options, listEndpoint: endpoint, payload })
+//             : endpoint(payload).then(res => ({ res, hasNextPage: false }))
+//     )
+// }
+
+function hasNextPage(res): boolean {
+    return R.pathSatisfies(x => x && x.includes('rel="next"'), ['headers', 'link'], res)
 }
 
-const hasNextPage = res =>
-    R.pathSatisfies(x => x && x.includes('rel="next"'), ['headers', 'link'], res)
-
-export function handlePagination({
-    options,
-    listEndpoint,
-    payload,
-}): Promise<{ data: object[]; hasNextPage: boolean }> {
+export function handlePagination({ options, listEndpoint, payload }) {
     return (options.allPages
         ? options.GitHub.paginate(listEndpoint.endpoint.merge(payload))
         : listEndpoint({ ...payload, per_page: options.pageSize })
